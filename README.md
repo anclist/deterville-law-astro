@@ -47,3 +47,6 @@ Components only consume **semantic** tokens (`--color-action`, `--space-5`), nev
 - Add analytics plus a cookie-consent banner (the legal page references Google Analytics).
 
 - Sister-firm links point at the other proposal preview; switch `sister.href` in `src/data/site.ts` to the live domain at launch.
+
+## Docs
+- [Reviews integration](docs/reviews-integration.md): plan for live Google ratings and a review moderation panel.
