@@ -60,6 +60,7 @@ const firmLinks = [
   .site-footer {
     background: var(--color-surface-inverse); color: var(--color-text-inverse-muted);
     padding-block: var(--space-8) var(--space-7); font-size: var(--size--1);
+    --color-focus: var(--paper);
   }
   p { color: var(--color-text-inverse-muted); }
   a { color: var(--color-text-inverse); text-decoration: none; }
@@ -75,6 +76,4 @@ const firmLinks = [
 
   @media (max-width: 62rem) { .grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 36rem) { .grid { grid-template-columns: 1fr; } }
-  /* Clear the fixed MobileActionBar */
-  @media (max-width: 48rem) { .site-footer { padding-bottom: calc(var(--space-7) + 4.5rem); } }
 </style>

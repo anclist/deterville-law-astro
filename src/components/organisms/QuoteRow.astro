@@ -1,33 +1,28 @@
 ---
-/** Organism: QuoteRow — three short review excerpts, each linking to the full review. */
+/** Organism: QuoteRow — review excerpts in a row of three. Three picked by default, or pass `all`. */
 import Container from '@atoms/Container.astro';
 import SectionHeading from '@molecules/SectionHeading.astro';
+import ReviewQuote from '@molecules/ReviewQuote.astro';
 import { testimonials } from '@data/site';
 
+interface Props { all?: boolean; showHeading?: boolean }
+const { all = false, showHeading = true } = Astro.props;
 const picks = ['Janice Suite', 'Jermael Syahungene', 'Karleen Greenidge'];
-const quotes = testimonials.filter((t) => picks.includes(t.name));
+const quotes = all ? testimonials : testimonials.filter((t) => picks.includes(t.name));
 ---
-<section class="quotes" aria-labelledby="quotes-title">
+<section class="quotes" aria-labelledby={showHeading ? 'quotes-title' : undefined} aria-label={showHeading ? undefined : 'Client reviews'}>
   <Container>
-    <SectionHeading id="quotes-title" title="What clients say" size="md" />
+    {showHeading && <SectionHeading id="quotes-title" title="What clients say" />}
     <div class="grid">
-      {quotes.map((q) => (
-        <figure>
-          <blockquote>{q.quote}</blockquote>
-          <figcaption><a href={q.href}>{q.name}, {q.source}</a></figcaption>
-        </figure>
-      ))}
+      {quotes.map((t) => <ReviewQuote testimonial={t} />)}
     </div>
-    <p><a class="all" href="/testimonials">Read all reviews</a></p>
+    {!all && <p><a class="all" href="/testimonials">Read all reviews</a></p>}
   </Container>
 </section>
 
 <style>
   .quotes { padding-block: var(--space-9); }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); margin-bottom: var(--space-6); }
-  blockquote { font: 500 var(--size-1)/1.4 var(--font-heading); color: var(--color-heading); }
-  figcaption { margin-top: var(--space-3); font-size: var(--size--1); }
-  figcaption a { color: var(--color-text-muted); text-underline-offset: 0.2em; }
-  .all { color: var(--color-action); text-underline-offset: 0.2em; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8) var(--space-7); }
+  .all { display: inline-block; margin-top: var(--space-6); text-underline-offset: 0.2em; }
   @media (max-width: 62rem) { .grid { grid-template-columns: 1fr; gap: var(--space-6); } }
 </style>

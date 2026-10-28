@@ -1,25 +1,16 @@
 ---
-/** Molecule: ContactMethod — icon + label + value; the value is the link. */
-import Icon from '@atoms/Icon.astro';
-import type { IconName } from '@lib/icons';
-interface Props { icon: IconName; label: string; href?: string; tone?: 'default' | 'inverse' }
-const { icon, label, href, tone = 'default' } = Astro.props;
+/** Molecule: ContactMethod — a muted label over its value; the value is the link. */
+interface Props { label: string; href?: string }
+const { label, href } = Astro.props;
 ---
-<div class:list={['contact-method', `contact-method--${tone}`]}>
-  <span class="icon-wrap"><Icon name={icon} size={20} /></span>
-  <div>
-    <p class="label">{label}</p>
-    {href ? <a href={href}><slot /></a> : <p class="value"><slot /></p>}
-  </div>
+<div class="contact-method">
+  <p class="label">{label}</p>
+  {href ? <a href={href}><slot /></a> : <p class="value"><slot /></p>}
 </div>
 
 <style>
-  .contact-method { display: flex; gap: var(--space-4); align-items: flex-start; }
-  .icon-wrap { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--color-surface-sunken); color: var(--color-action); flex: none; }
   .label { font-size: var(--size--1); color: var(--color-text-muted); }
-  a, .value { font-weight: 600; color: var(--color-text); text-decoration: none; }
-  a:hover { color: var(--color-action); text-decoration: underline; }
-  .contact-method--inverse .icon-wrap { background: rgb(255 255 255 / 0.08); color: var(--color-accent-on-dark); }
-  .contact-method--inverse .label { color: var(--color-text-inverse-muted); }
-  .contact-method--inverse a, .contact-method--inverse .value { color: var(--color-text-inverse); }
+  a, .value { color: var(--color-text); }
+  a { text-underline-offset: 0.2em; }
+  a:hover { color: var(--color-action); }
 </style>

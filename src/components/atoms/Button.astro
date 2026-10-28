@@ -2,14 +2,14 @@
 /**
  * Atom: Button — renders <a> when `href` is set, otherwise <button>.
  * Variants map to intent, not colour: primary = the one action we want, secondary = alternative,
- * ghost = low-emphasis, inverse = primary on dark grounds.
+ * ghost = low-emphasis.
  */
 import Icon from './Icon.astro';
 import type { IconName } from '@lib/icons';
 
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse';
+  variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'md' | 'lg' | 'sm';
   icon?: IconName;
   type?: 'button' | 'submit' | 'reset';
@@ -51,9 +51,8 @@ const Tag = href ? 'a' : 'button';
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
-    transition: background var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease), transform var(--motion-fast) var(--motion-ease);
+    transition: background var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease);
   }
-  .btn:active { transform: translateY(1px); }
 
   .btn--primary:hover { --_bg: var(--color-action-hover); --_border: var(--color-action-hover); }
 
@@ -62,9 +61,6 @@ const Tag = href ? 'a' : 'button';
 
   .btn--ghost { --_bg: transparent; --_fg: var(--color-text); --_border: transparent; padding-inline: 0.75em; }
   .btn--ghost:hover { --_bg: var(--color-surface-tint); }
-
-  .btn--inverse { --_bg: var(--color-accent-on-dark); --_fg: var(--oxblood-900); --_border: var(--color-accent-on-dark); }
-  .btn--inverse:hover { --_bg: var(--gold-300); --_border: var(--gold-300); }
 
   .btn--sm { font-size: var(--size--1); padding: 0.6em 1.15em; }
   .btn--lg { font-size: var(--size-1); padding: 0.85em 1.6em; }

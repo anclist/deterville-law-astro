@@ -3,6 +3,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Container from '@atoms/Container.astro';
 import Icon from '@atoms/Icon.astro';
+import Step from '@molecules/Step.astro';
 import PageHero from '@organisms/PageHero.astro';
 import { firm, steps } from '@data/site';
 const formUrl = 'https://form.jotform.com/222770543698062';
@@ -22,7 +23,7 @@ const formUrl = 'https://form.jotform.com/222770543698062';
         </ul>
         <h2>What happens next</h2>
         <ol class="next">
-          {steps.map((s) => <li><strong>{s.title}.</strong> {s.body}</li>)}
+          {steps.map((s) => <Step title={s.title}>{s.body}</Step>)}
         </ol>
         <p class="secure"><Icon name="shield" size={18} />The booking form is encrypted.</p>
         <p class="help">Trouble with the form? Call <a href={firm.phoneHref}>{firm.phone}</a> or <a href={`mailto:${firm.email}`}>email us</a>.</p>
@@ -36,7 +37,7 @@ const formUrl = 'https://form.jotform.com/222770543698062';
 </BaseLayout>
 
 <style>
-  .booking { padding-block: var(--space-8) var(--layout-section-y); }
+  .booking { padding-block: var(--space-8) var(--space-9); }
   .booking :global(.booking-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 62rem) { .booking :global(.booking-grid) { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-8); align-items: start; } .aside { position: sticky; top: 7rem; } }
   h2 { font-size: var(--size-2); margin-bottom: var(--space-4); }
@@ -44,10 +45,9 @@ const formUrl = 'https://form.jotform.com/222770543698062';
   .needs { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
   .needs li { display: flex; gap: var(--space-2); }
   .needs :global(.icon) { color: var(--color-action); margin-top: 0.25em; }
-  .next { padding-left: 1.2em; display: grid; gap: var(--space-3); color: var(--color-text-muted); }
-  .next strong { color: var(--color-text); }
+  .next { padding-left: 1.25rem; display: grid; gap: var(--space-4); }
   .secure { margin-top: var(--space-6); display: flex; gap: var(--space-2); align-items: center; color: var(--color-success); font-weight: 600; font-size: var(--size--1); }
   .help { margin-top: var(--space-3); font-size: var(--size--1); color: var(--color-text-muted); }
-  .frame iframe { width: 100%; height: 1600px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+  .frame iframe { width: 100%; height: 1600px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface); }
   .fallback { margin-top: var(--space-3); font-size: var(--size--1); color: var(--color-text-muted); }
 </style>

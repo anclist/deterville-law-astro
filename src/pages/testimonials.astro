@@ -3,15 +3,15 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Button from '@atoms/Button.astro';
 import RatingBadge from '@molecules/RatingBadge.astro';
 import PageHero from '@organisms/PageHero.astro';
-import TestimonialGrid from '@organisms/TestimonialGrid.astro';
+import QuoteRow from '@organisms/QuoteRow.astro';
 import CtaBand from '@organisms/CtaBand.astro';
-import { firm, testimonials } from '@data/site';
+import { firm } from '@data/site';
 ---
 <BaseLayout title="Testimonials" description="Client reviews of Deterville Law Office. Rated 4.9 from 24 Google reviews.">
   <PageHero title="Testimonials and reviews" lede="Reviews from clients on Google and Facebook. Every review links back to where it was posted.">
     <RatingBadge />
     <Button href={firm.mapHref} variant="secondary" target="_blank" rel="noopener">Read all reviews on Google</Button>
   </PageHero>
-  <TestimonialGrid limit={testimonials.length} showHeading={false} />
-  <CtaBand title="Join clients who got clear answers." />
+  <QuoteRow all showHeading={false} />
+  <CtaBand />
 </BaseLayout>

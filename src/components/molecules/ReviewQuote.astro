@@ -1,0 +1,16 @@
+---
+/** Molecule: ReviewQuote — a review excerpt set as a quote, attributed and linked to where it was posted. */
+import type { Testimonial } from '@data/site';
+interface Props { testimonial: Testimonial }
+const { quote, name, source, href } = Astro.props.testimonial;
+---
+<figure class="review">
+  <blockquote>{quote}</blockquote>
+  <figcaption><a href={href} target="_blank" rel="noopener">{name}, {source}</a></figcaption>
+</figure>
+
+<style>
+  blockquote { font: 500 var(--size-1)/1.4 var(--font-heading); color: var(--color-heading); }
+  figcaption { margin-top: var(--space-3); font-size: var(--size--1); }
+  figcaption a { color: var(--color-text-muted); text-underline-offset: 0.2em; }
+</style>

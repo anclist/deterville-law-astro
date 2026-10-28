@@ -40,12 +40,12 @@ const categories = ['All posts', 'Immigration', 'Wills & Estates'];
 </script>
 
 <style>
-  .blog { padding-block: var(--space-7) var(--layout-section-y); }
+  .blog { padding-block: var(--space-7) var(--space-9); }
   .filters { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-7); }
   .filters button {
-    padding: 0.5em 1.1em; border-radius: var(--radius-pill);
-    border: 1.5px solid var(--color-border-strong); background: var(--color-surface);
-    font-weight: 600; font-size: var(--size--1); color: var(--color-text);
+    padding: 0.45em 0.9em; border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border); background: var(--color-surface);
+    font-weight: 500; font-size: var(--size--1); color: var(--color-text);
   }
   .filters button:hover { border-color: var(--color-action); }
   .filters button[aria-pressed='true'] { background: var(--color-action); border-color: var(--color-action); color: var(--color-action-text); }

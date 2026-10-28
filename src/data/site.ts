@@ -29,20 +29,13 @@ export const nav = [
   { label: 'Contact', href: '/contact-us' },
 ] as const;
 
-export const footerNav = [
-  { label: 'Media & appearances', href: '/media' },
-  { label: 'Consultation documents', href: '/consultation-documents' },
-  { label: 'Legal & privacy', href: '/legal' },
-  { label: 'Styleguide', href: '/styleguide' },
-] as const;
-
 export const socials = [
-  { label: 'Facebook', href: 'https://www.facebook.com/detervillelaw', icon: 'facebook' },
-  { label: 'Instagram', href: 'https://www.instagram.com/detervillelaw', icon: 'instagram' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/detervillelaw/', icon: 'linkedin' },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@detervillelaw', icon: 'tiktok' },
-  { label: 'X', href: 'https://www.x.com/DetervilleLaw', icon: 'x' },
-  { label: 'YouTube', href: 'https://www.youtube.com/channel/UC2Xy8NwBTv4A-MOzmF4M9nA', icon: 'youtube' },
+  { label: 'Facebook', href: 'https://www.facebook.com/detervillelaw' },
+  { label: 'Instagram', href: 'https://www.instagram.com/detervillelaw' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/detervillelaw/' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@detervillelaw' },
+  { label: 'X', href: 'https://www.x.com/DetervilleLaw' },
+  { label: 'YouTube', href: 'https://www.youtube.com/channel/UC2Xy8NwBTv4A-MOzmF4M9nA' },
 ] as const;
 
 export type Practice = {

@@ -1,14 +1,18 @@
 ---
-/** Organism: ServiceColumns — the three practices side by side, each with what it covers. */
+/** Organism: ServiceColumns — practices side by side, each with what it covers. `exclude` drops the current one. */
 import Container from '@atoms/Container.astro';
 import SectionHeading from '@molecules/SectionHeading.astro';
 import { practices } from '@data/site';
+
+interface Props { title?: string; exclude?: string }
+const { title = 'How we can help', exclude } = Astro.props;
+const shown = practices.filter((p) => p.slug !== exclude);
 ---
 <section class="services" aria-labelledby="services-title">
   <Container>
-    <SectionHeading id="services-title" title="How we can help" size="md" />
-    <div class="grid">
-      {practices.map((p) => (
+    <SectionHeading id="services-title" title={title} />
+    <div class="grid" style={`--cols:${shown.length}`}>
+      {shown.map((p) => (
         <div class="service">
           <h3><a href={p.href}>{p.title}</a></h3>
           <p>{p.short}</p>
@@ -22,12 +26,12 @@ import { practices } from '@data/site';
 
 <style>
   .services { padding-block: var(--space-9); }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
-  .service { border-top: 2px solid var(--color-action); padding-top: var(--space-5); }
-  h3 { font-size: var(--size-2); font-weight: 500; margin-bottom: var(--space-3); }
+  .grid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: var(--space-7); }
+  .service { border-top: 2px solid var(--color-action); padding-top: var(--space-5); max-width: 28rem; }
+  h3 { font-size: var(--size-2); margin-bottom: var(--space-3); }
   h3 a { color: var(--color-text); text-decoration: none; }
   h3 a:hover { color: var(--color-action); text-decoration: underline; }
   ul { margin: var(--space-4) 0; padding-left: 1.1rem; display: grid; gap: var(--space-1); font-size: var(--size--1); }
-  .more { color: var(--color-action); text-underline-offset: 0.2em; }
+  .more { text-underline-offset: 0.2em; }
   @media (max-width: 48rem) { .grid { grid-template-columns: 1fr; } }
 </style>

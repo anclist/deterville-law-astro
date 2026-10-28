@@ -1,25 +1,13 @@
 ---
-/** Molecule: RatingBadge — aggregate review score linking to the source. */
-import Stars from '@atoms/Stars.astro';
+/** Molecule: RatingBadge — the aggregate review score as one plain sentence, linking to the source. */
 import { firm } from '@data/site';
-interface Props { tone?: 'default' | 'inverse' }
-const { tone = 'default' } = Astro.props;
 const { score, count, source } = firm.rating;
 ---
-<a class:list={['rating-badge', `rating-badge--${tone}`]} href={firm.mapHref} target="_blank" rel="noopener">
-  <strong>{score}</strong>
-  <span class="detail">
-    <Stars value={score} size={14} />
-    <span>{count} {source} reviews</span>
-  </span>
+<a class="rating" href={firm.mapHref} target="_blank" rel="noopener">
+  Rated <strong>{score}</strong> on {source} from {count} reviews
 </a>
 
 <style>
-  .rating-badge { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--color-text); text-decoration: none; }
-  strong { font-family: var(--font-heading); font-size: var(--size-3); line-height: 1; color: var(--color-heading); }
-  .detail { display: grid; gap: 2px; font-size: var(--size--1); color: var(--color-text-muted); }
-  .rating-badge:hover .detail > span:last-child { text-decoration: underline; }
-  .rating-badge--inverse { color: var(--color-text-inverse); }
-  .rating-badge--inverse strong { color: var(--color-text-inverse); }
-  .rating-badge--inverse .detail { color: var(--color-text-inverse-muted); }
+  .rating { font-size: var(--size--1); color: var(--color-text-muted); text-underline-offset: 0.2em; }
+  strong { font-weight: 600; color: var(--color-text); }
 </style>

@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
-import Journey from '@organisms/Journey.astro';
+import RouteTimeline from '@organisms/RouteTimeline.astro';
 import CtaBand from '@organisms/CtaBand.astro';
 import { firm, memberships } from '@data/site';
 ---
@@ -41,7 +41,7 @@ import { firm, memberships } from '@data/site';
     </Container>
   </section>
 
-  <Journey showLink={false} />
+  <RouteTimeline title="Route to Canada" lede="" showLink={false} />
 
   <section class="community" aria-labelledby="community-title">
     <Container class="community-grid">
@@ -62,20 +62,20 @@ import { firm, memberships } from '@data/site';
 </BaseLayout>
 
 <style>
-  .bio-hero { padding-block: var(--space-8) var(--layout-section-y); background: linear-gradient(var(--color-surface-tint), var(--color-surface) 60%); }
+  .bio-hero { padding-block: var(--space-8) var(--space-9); }
   .bio-hero :global(.bio-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 60rem) { .bio-hero :global(.bio-grid) { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr); gap: var(--space-9); align-items: start; } }
-  h1 { font-size: var(--size-5); letter-spacing: -0.015em; }
-  .role { margin-top: var(--space-2); font-size: var(--size-1); color: var(--color-action); }
+  h1 { font-size: var(--size-4); line-height: 1.05; }
+  .role { margin-top: var(--space-3); font-size: var(--size-1); color: var(--color-text-muted); }
   .prose { margin-top: var(--space-6); display: grid; gap: var(--space-5); max-width: var(--measure-prose); }
   .actions { margin-top: var(--space-7); }
   .photo { position: sticky; top: 7rem; }
-  .photo img { border-radius: var(--radius-md); aspect-ratio: 3 / 4; object-fit: cover; box-shadow: 1.25rem 1.25rem 0 var(--oxblood-700); }
+  .photo img { border-radius: var(--radius-sm); aspect-ratio: 3 / 4; object-fit: cover; }
   @media (max-width: 60rem) { .photo { order: -1; position: static; max-width: 18rem; } }
-  .community { padding-block: var(--layout-section-y); }
+  .community { padding-block: var(--space-9); }
   .community :global(.community-grid) { display: grid; gap: var(--space-7); }
   @media (min-width: 60rem) { .community :global(.community-grid) { grid-template-columns: 1fr 1fr; gap: var(--space-9); } }
-  .community h2 { font-size: var(--size-4); margin-bottom: var(--space-5); }
+  .community h2 { font-size: var(--size-3); margin-bottom: var(--space-5); }
   .community p + p { margin-top: var(--space-4); }
   .community ul { list-style: none; padding: 0; }
   .community li { padding-block: var(--space-4); border-top: 1px solid var(--color-border); }

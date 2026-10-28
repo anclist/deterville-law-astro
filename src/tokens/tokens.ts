@@ -20,9 +20,6 @@ export const primitive = {
     'oxblood-700': '#780B0B',
     'oxblood-800': '#5A0707',
     'oxblood-900': '#3D0303',
-    // Saint Lucia flag gold — used on dark grounds only
-    'gold-300': '#F2D27E',
-    'gold-500': '#E8B84A',
     // Neutrals, warmed a touch toward the red so greys don't go blue next to oxblood
     'ink-900': '#1F1A1A',
     'ink-700': '#3F3737',
@@ -33,13 +30,12 @@ export const primitive = {
     // Feedback
     'green-700': '#1F6B47',
     'green-50': '#EAF5EF',
-    'amber-700': '#8A5A00',
   },
   font: {
     serif: "'Playfair Display', Georgia, 'Times New Roman', serif",
     sans: "'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
   },
-  // Modular scale, ratio 1.25 (major third) from 1.0625rem body
+  // Modular scale, ratio 1.25 (major third) from 1.0625rem body; step 4 is fluid for page titles
   size: {
     '-2': '0.75rem',
     '-1': '0.875rem',
@@ -47,9 +43,7 @@ export const primitive = {
     '1': '1.3125rem',
     '2': '1.625rem',
     '3': '2.0625rem',
-    '4': '2.5625rem',
-    '5': 'clamp(2.5rem, 1.6rem + 3.6vw, 4rem)',
-    '6': 'clamp(2.875rem, 1.5rem + 5.2vw, 5.5rem)',
+    '4': 'clamp(2.5rem, 1.6rem + 3.6vw, 4rem)',
   },
   // 4px base grid
   space: {
@@ -64,10 +58,9 @@ export const primitive = {
     '9': '6rem',
     '10': '8rem',
   },
+  // One radius: just enough to take the edge off buttons, inputs and photographs
   radius: {
     sm: '4px',
-    md: '8px',
-    pill: '999px',
   },
 } as const;
 
@@ -77,7 +70,6 @@ export const semantic = {
   color: {
     'surface': c('paper'),
     'surface-tint': c('oxblood-50'),
-    'surface-sunken': c('oxblood-100'),
     'surface-inverse': c('oxblood-900'),
     'text': c('ink-900'),
     'text-muted': c('ink-500'),
@@ -87,13 +79,11 @@ export const semantic = {
     'action': c('oxblood-700'),
     'action-hover': c('oxblood-800'),
     'action-text': c('paper'),
-    'accent-on-dark': c('gold-500'),
     'border': c('ink-100'),
     'border-strong': c('ink-300'),
-    'focus': c('gold-500'),
+    'focus': c('oxblood-600'),
     'success': c('green-700'),
     'success-surface': c('green-50'),
-    'rating': c('amber-700'),
   },
   font: {
     'heading': 'var(--font-serif)',
@@ -111,7 +101,6 @@ export const semantic = {
   layout: {
     'container': '76rem',
     'gutter': 'clamp(1rem, 4vw, 2.5rem)',
-    'section-y': 'clamp(4rem, 8vw, 7.5rem)',
   },
   shadow: {
     raised: '0 1px 2px rgb(61 3 3 / 0.06), 0 8px 24px -12px rgb(61 3 3 / 0.18)',

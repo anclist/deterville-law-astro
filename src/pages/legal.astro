@@ -7,7 +7,7 @@ import { Content, getHeadings } from '../content/pages/legal.md';
 const toc = getHeadings().filter((h) => h.depth === 2);
 ---
 <BaseLayout title="Legal & Privacy" description="Deterville Law Office website user agreement, privacy policy, and legal disclaimer.">
-  <PageHero title="Website user agreement and privacy policy" lede="Using this website doesn’t make you a client, and nothing here is legal advice for your situation." tone="plain" />
+  <PageHero title="Website user agreement and privacy policy" lede="Using this website doesn’t make you a client, and nothing here is legal advice for your situation." />
   <section class="legal">
     <Container class="legal-grid">
       <nav class="toc" aria-label="On this page">
@@ -19,7 +19,7 @@ const toc = getHeadings().filter((h) => h.depth === 2);
 </BaseLayout>
 
 <style>
-  .legal { padding-block: var(--space-6) var(--layout-section-y); }
+  .legal { padding-block: var(--space-7) var(--space-9); }
   .legal :global(.legal-grid) { display: grid; gap: var(--space-7); }
   @media (min-width: 60rem) { .legal :global(.legal-grid) { grid-template-columns: 15rem minmax(0, 1fr); gap: var(--space-9); align-items: start; } .toc { position: sticky; top: 7rem; } }
   .toc ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); border-left: 2px solid var(--color-border); }

@@ -4,7 +4,6 @@ import { toCss } from '@tokens/tokens';
 import { firm, socials } from '@data/site';
 import SiteHeader from '@organisms/SiteHeader.astro';
 import SiteFooter from '@organisms/SiteFooter.astro';
-import MobileActionBar from '@organisms/MobileActionBar.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -86,6 +85,5 @@ const jsonLd = {
     {chrome && <SiteHeader />}
     <main id="main"><slot /></main>
     {chrome && <SiteFooter />}
-    {chrome && <MobileActionBar />}
   </body>
 </html>
