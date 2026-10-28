@@ -2,14 +2,14 @@
 /**
  * Atom: Button — renders <a> when `href` is set, otherwise <button>.
  * Variants map to intent, not colour: primary = the one action we want, secondary = alternative,
- * ghost = low-emphasis.
+ * ghost = low-emphasis, inverse = primary on the dark footer.
  */
 import Icon from './Icon.astro';
 import type { IconName } from '@lib/icons';
 
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse';
   size?: 'md' | 'lg' | 'sm';
   icon?: IconName;
   type?: 'button' | 'submit' | 'reset';
@@ -61,6 +61,9 @@ const Tag = href ? 'a' : 'button';
 
   .btn--ghost { --_bg: transparent; --_fg: var(--color-text); --_border: transparent; padding-inline: 0.75em; }
   .btn--ghost:hover { --_bg: var(--color-surface-tint); }
+
+  .btn--inverse { --_bg: var(--color-surface); --_fg: var(--color-action); --_border: var(--color-surface); }
+  .btn--inverse:hover { --_bg: var(--color-surface-tint); --_border: var(--color-surface-tint); }
 
   .btn--sm { font-size: var(--size--1); padding: 0.6em 1.15em; }
   .btn--lg { font-size: var(--size-1); padding: 0.85em 1.6em; }

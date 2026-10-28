@@ -22,6 +22,7 @@ import Step from '@molecules/Step.astro';
 import RatingBadge from '@molecules/RatingBadge.astro';
 import FaqItem from '@molecules/FaqItem.astro';
 import MediaRow from '@molecules/MediaRow.astro';
+import SubscribeForm from '@molecules/SubscribeForm.astro';
 import PageHero from '@organisms/PageHero.astro';
 import ServiceColumns from '@organisms/ServiceColumns.astro';
 import RouteTimeline from '@organisms/RouteTimeline.astro';
@@ -82,7 +83,7 @@ const organisms = [
   ['ContactForm', 'General enquiries; posts to a form endpoint or falls back to email.'],
   ['Prose', 'Long-form typography for blog posts and the legal page.'],
   ['CtaBand', 'The closing ask on the tint. Every page ends here.'],
-  ['SiteFooter', 'The only dark surface: firm, services, pages, contact, socials and the regulatory notice.'],
+  ['SiteFooter', 'The only dark surface: email signup, firm, services, pages, contact, socials and the regulatory notice.'],
 ];
 ---
 <BaseLayout title="Styleguide" description="The Deterville Law Office design system: tokens, atoms, molecules and organisms." noindex>
@@ -206,12 +207,13 @@ const organisms = [
 
         <div class="specimen">
           <h3>Button</h3>
-          <p class="note">Primary is the single action we want on a screen. Secondary is an alternative; ghost is low emphasis.</p>
+          <p class="note">Primary is the single action we want on a screen. Secondary is an alternative; ghost is low emphasis; inverse is primary on the footer.</p>
           <div class="row">
             <Button>Book a consultation</Button>
             <Button variant="secondary">Read all reviews on Google</Button>
             <Button variant="ghost">Cancel</Button>
           </div>
+          <div class="row footer-ground"><Button variant="inverse">Sign up</Button><span class="note on-dark">Inverse: the primary action on the dark footer.</span></div>
           <div class="row">
             <Button size="sm">Small</Button>
             <Button>Medium</Button>
@@ -297,6 +299,15 @@ const organisms = [
           <div>
             <FaqItem question="I live outside Canada. Can we still meet?" open>Yes. Most consultations happen online.</FaqItem>
             <FaqItem question="Is the consultation free?">No. Consultations are paid.</FaqItem>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>SubscribeForm</h3>
+          <p class="note">Email signup for the firm’s updates. Posts to <code>PUBLIC_SUBSCRIBE_ENDPOINT</code>, or opens a pre-filled email without one. <code>tone="inverse"</code> is the footer version.</p>
+          <div class="grid-2">
+            <SubscribeForm id="sg-subscribe" />
+            <div class="footer-ground"><SubscribeForm id="sg-subscribe-inverse" tone="inverse" /></div>
           </div>
         </div>
 
@@ -394,6 +405,8 @@ const organisms = [
   .icons code { background: none; color: var(--color-text-muted); }
   .steps-demo { padding-left: 1.25rem; display: grid; gap: var(--space-4); }
   .plain { list-style: none; padding: 0; }
+  .footer-ground { background: var(--color-surface-inverse); padding: var(--space-5); border-radius: var(--radius-sm); }
+  .on-dark { color: var(--color-text-inverse-muted); }
   .organism-list { display: grid; }
   .organism-list > div { display: grid; gap: var(--space-1); padding-block: var(--space-3); border-bottom: 1px solid var(--color-border); }
   @media (min-width: 40rem) { .organism-list > div { grid-template-columns: 11rem minmax(0, 1fr); gap: var(--space-4); } }

@@ -40,6 +40,7 @@ Components only consume **semantic** tokens (`--color-action`, `--space-5`), nev
 ## Before launch
 
 - Contact form: set `PUBLIC_FORM_ENDPOINT` (Formspree, Netlify Forms, etc.). Without it the form opens a pre-filled email.
+- Subscribe form: set `PUBLIC_SUBSCRIBE_ENDPOINT` to the email service's signup endpoint (Mailchimp, Kit, Buttondown, …; field name `email`). On the current GoDaddy site these signups go to the Websites + Marketing subscriber list; export that list into the new service before switching. Without an endpoint the form opens a pre-filled email to the office.
 - Blog: only 3 of ~110 posts are migrated. The rest need exporting from GoDaddy into `src/content/blog/`.
 - Practice-page "What we help with" lists are proposals. The firm needs to confirm them.
 - Testimonials are the truncated excerpts the review widgets show. Get full quotes and permission.

@@ -1,0 +1,79 @@
+---
+/**
+ * Molecule: SubscribeForm — email signup for the firm's updates, replacing the GoDaddy
+ * "Subscribe" widget (which fed the Websites + Marketing subscriber list).
+ * Posts `email` to PUBLIC_SUBSCRIBE_ENDPOINT when configured (Mailchimp, Kit, Buttondown, …).
+ * Without one it opens the visitor's email app with a signup request to the office.
+ */
+import Input from '@atoms/Input.astro';
+import Button from '@atoms/Button.astro';
+import { firm } from '@data/site';
+
+interface Props { id?: string; tone?: 'default' | 'inverse' }
+const { id = 'subscribe-email', tone = 'default' } = Astro.props;
+const endpoint = import.meta.env.PUBLIC_SUBSCRIBE_ENDPOINT ?? '';
+---
+<form
+  class:list={['subscribe', `subscribe--${tone}`]}
+  method="post"
+  action={endpoint || `mailto:${firm.email}`}
+  data-subscribe
+  data-endpoint={endpoint}
+  data-email={firm.email}
+  novalidate
+>
+  <label for={id}>Email address</label>
+  <div class="row">
+    <Input id={id} name="email" type="email" required autocomplete="email" />
+    <Button type="submit" variant={tone === 'inverse' ? 'inverse' : 'primary'}>Sign up</Button>
+  </div>
+  <p class="note">You can unsubscribe at any time.</p>
+  <p class="status" role="status" aria-live="polite" hidden data-status></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-subscribe]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = form.querySelector<HTMLInputElement>('input[name="email"]')!;
+      const status = form.querySelector<HTMLElement>('[data-status]')!;
+      const ok = input.checkValidity();
+      input.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok) {
+        status.hidden = false;
+        status.textContent = 'Enter an email address like name@example.com.';
+        input.focus();
+        return;
+      }
+
+      const email = input.value.trim();
+      const endpoint = form.dataset.endpoint;
+      if (endpoint) {
+        const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } }).catch(() => null);
+        status.hidden = false;
+        status.textContent = res?.ok
+          ? `Subscribed. Updates will go to ${email}.`
+          : `Not subscribed. Email ${form.dataset.email} to be added to the list.`;
+        if (res?.ok) form.reset();
+        return;
+      }
+      const body = `Please add ${email} to your email updates.`;
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Subscribe to updates')}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>
+
+<style>
+  .subscribe { display: grid; gap: var(--space-2); max-width: 30rem; }
+  label { font-weight: 600; font-size: var(--size--1); }
+  .row { display: flex; gap: var(--space-3); }
+  .row :global(.field) { flex: 1; min-width: 0; }
+  .note, .status { font-size: var(--size--1); color: var(--color-text-muted); }
+  .status { color: var(--color-text); }
+
+  .subscribe--inverse label, .subscribe--inverse .status { color: var(--color-text-inverse); }
+  .subscribe--inverse .note { color: var(--color-text-inverse-muted); }
+  .subscribe--inverse :global(.field) { border-color: transparent; }
+
+  @media (max-width: 30rem) { .row { flex-direction: column; } }
+</style>
