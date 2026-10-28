@@ -5,7 +5,7 @@
  */
 import Container from '@atoms/Container.astro';
 import SubscribeForm from '@molecules/SubscribeForm.astro';
-import { firm, practices, socials } from '@data/site';
+import { firm, practices, socials, sister } from '@data/site';
 
 const year = new Date().getFullYear();
 const firmLinks = [
@@ -51,6 +51,11 @@ const firmLinks = [
       </div>
     </div>
 
+    <p class="sister">
+      Our sister firm in Saint Lucia, <a href={sister.href} target="_blank" rel="noopener">{sister.name}</a>, handles{' '}
+      {sister.summary}.
+    </p>
+
     <div class="bottom">
       <ul class="socials" aria-label="Social media">
         {socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
@@ -81,7 +86,9 @@ const firmLinks = [
   .grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: var(--space-7); }
   .brand { display: grid; gap: var(--space-3); align-content: start; max-width: 32ch; }
   .name { font: 500 var(--size-2)/1.2 var(--font-heading); color: var(--color-text-inverse); }
-  .bottom { margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid rgb(255 255 255 / 0.14); display: grid; gap: var(--space-3); }
+  .sister { margin-top: var(--space-8); font-size: var(--size-0); }
+  .sister a { text-decoration: underline; text-underline-offset: 0.2em; }
+  .bottom { margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid rgb(255 255 255 / 0.14); display: grid; gap: var(--space-3); }
   .socials { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin-bottom: var(--space-2); }
   .bottom p { font-size: var(--size--2); max-width: 90ch; }
 

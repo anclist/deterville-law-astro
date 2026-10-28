@@ -45,3 +45,5 @@ Components only consume **semantic** tokens (`--color-action`, `--space-5`), nev
 - Practice-page "What we help with" lists are proposals. The firm needs to confirm them.
 - Testimonials are the truncated excerpts the review widgets show. Get full quotes and permission.
 - Add analytics plus a cookie-consent banner (the legal page references Google Analytics).
+
+- Sister-firm links point at the other proposal preview; switch `sister.href` in `src/data/site.ts` to the live domain at launch.

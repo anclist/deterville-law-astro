@@ -19,6 +19,13 @@ export const firm = {
   rating: { score: 4.9, count: 24, source: 'Google' },
 } as const;
 
+/** The sister firm in Saint Lucia. Points at its proposal preview; switch to https://detervilleassociates.com at launch. */
+export const sister = {
+  name: 'Deterville & Associates',
+  href: 'https://anclist.github.io/deterville-associates-astro/',
+  summary: 'family, property, business and citizenship matters in Saint Lucia',
+} as const;
+
 export const nav = [
   { label: 'Immigration', href: '/immigration' },
   { label: 'Wills & Estates', href: '/wills-estates' },

@@ -4,7 +4,7 @@ import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
 import RouteTimeline from '@organisms/RouteTimeline.astro';
 import CtaBand from '@organisms/CtaBand.astro';
-import { firm, memberships } from '@data/site';
+import { firm, memberships, sister } from '@data/site';
 ---
 <BaseLayout title="Who We Are" description="Nandi A. O. Deterville, Toronto lawyer focused on Canadian immigration and Ontario estate planning. Called to the Bars of Ontario, England & Wales, and Saint Lucia.">
   <section class="bio-hero">
@@ -58,6 +58,15 @@ import { firm, memberships } from '@data/site';
       </ul>
     </Container>
   </section>
+  <section class="sister" aria-labelledby="sister-title">
+    <Container class="sister-grid">
+      <h2 id="sister-title">Our sister firm in Saint Lucia</h2>
+      <p>
+        <a href={sister.href} target="_blank" rel="noopener">{sister.name}</a> in Castries handles {sister.summary}.
+      </p>
+    </Container>
+  </section>
+
   <CtaBand />
 </BaseLayout>
 
@@ -73,6 +82,11 @@ import { firm, memberships } from '@data/site';
   .photo img { border-radius: var(--radius-sm); aspect-ratio: 3 / 4; object-fit: cover; }
   @media (max-width: 60rem) { .photo { order: -1; position: static; max-width: 18rem; } }
   .community { padding-block: var(--layout-section); }
+  .sister { padding-block: var(--layout-section); border-top: 1px solid var(--color-border); }
+  .sister :global(.sister-grid) { display: grid; gap: var(--space-5); }
+  @media (min-width: 60rem) { .sister :global(.sister-grid) { grid-template-columns: 1fr 2fr; gap: var(--space-8); } }
+  .sister h2 { font-size: var(--size-3); }
+  .sister p { font-size: var(--size-1); line-height: var(--leading-snug); max-width: 56ch; }
   .community :global(.community-grid) { display: grid; gap: var(--space-7); }
   @media (min-width: 60rem) { .community :global(.community-grid) { grid-template-columns: 1fr 1fr; gap: var(--space-9); } }
   .community h2 { font-size: var(--size-3); margin-bottom: var(--space-5); }
