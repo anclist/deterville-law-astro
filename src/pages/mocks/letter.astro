@@ -1,0 +1,117 @@
+---
+/**
+ * Mock A — "Letter". One narrow column, read top to bottom like correspondence from the office.
+ * Colour is reserved for the logo and links; no bands, cards, icons or motion.
+ */
+import MockLayout from '@layouts/MockLayout.astro';
+import { firm, practices, steps } from '@data/site';
+---
+<MockLayout title="A · Letter" label="Mock A: Letter">
+  <div class="page">
+    <header class="top">
+      <a href="/mocks/letter" class="logo"><img src="/images/logo.png" alt="Deterville Law Office" width="80" height="60" /></a>
+      <nav aria-label="Main">
+        <a href="/immigration">Immigration</a>
+        <a href="/wills-estates">Wills &amp; Estates</a>
+        <a href="/notarial-services">Notarial</a>
+        <a href="/who-we-are">About</a>
+        <a href="/contact-us">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro">
+        <h1>Canadian immigration law and Ontario estate planning.</h1>
+        <p>
+          Deterville Law Office is the Toronto practice of {firm.lawyer}, Barrister and Solicitor. We help people visit,
+          study, work and settle in Canada, and help Ontario families put Wills and Powers of Attorney in place.
+          Consultations are online, wherever you are, or in person in Toronto.
+        </p>
+        <p class="actions">
+          <a class="button" href={firm.bookHref}>Book a consultation</a>
+          <span>or call <a href={firm.phoneHref}>{firm.phone}</a></span>
+        </p>
+      </section>
+
+      <section aria-labelledby="practice">
+        <h2 id="practice">What we do</h2>
+        <dl class="practices">
+          {practices.map((p) => (
+            <div>
+              <dt><a href={p.href}>{p.title}</a></dt>
+              <dd>{p.summary}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section aria-labelledby="about" class="about">
+        <img src="/images/nandi-deterville.jpg" alt="Nandi Deterville" width="120" height="160" />
+        <div>
+          <h2 id="about">About Ms Deterville</h2>
+          <p>
+            Born and raised in Saint Lucia, Ms Deterville was called to the Bars of England &amp; Wales and Saint Lucia in 2008
+            and to the Ontario Bar in 2017. Having lived in five countries other than her homeland, she brings lived experience
+            of immigration to every file.
+          </p>
+          <p><a href="/who-we-are">Read her full biography</a></p>
+        </div>
+      </section>
+
+      <section aria-labelledby="start">
+        <h2 id="start">How to start</h2>
+        <ol class="steps">
+          {steps.map((s) => <li><strong>{s.title}.</strong> {s.body}</li>)}
+        </ol>
+        <p><a href={firm.bookHref}>Begin with the client verification form</a></p>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <address>
+        {firm.address.line1}<br />{firm.address.city}<br />
+        <a href={firm.phoneHref}>{firm.phone}</a> · <a href={`mailto:${firm.email}`}>{firm.email}</a>
+      </address>
+      <p>Law Society of Ontario no. {firm.lsoNumber} · <a href="/legal">Legal &amp; privacy</a></p>
+    </footer>
+  </div>
+</MockLayout>
+
+<style>
+  .page { max-width: 40rem; margin-inline: auto; padding: var(--space-6) var(--layout-gutter) var(--space-9); }
+  a { color: var(--oxblood-700); text-underline-offset: 0.2em; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); flex-wrap: wrap; }
+  .top nav { display: flex; gap: var(--space-4); flex-wrap: wrap; font-size: var(--size--1); }
+  .top nav a { color: var(--ink-700); text-decoration: none; }
+  .top nav a:hover { color: var(--oxblood-700); text-decoration: underline; }
+
+  main > section { margin-top: var(--space-9); }
+  main > .intro { margin-top: var(--space-8); }
+  h1 { font: 500 var(--size-4)/1.15 var(--font-serif); color: var(--ink-900); max-width: 20ch; }
+  h2 { font: 500 var(--size-2)/1.2 var(--font-serif); color: var(--ink-900); margin-bottom: var(--space-5); }
+  p { color: var(--ink-700); }
+  p + p { margin-top: var(--space-4); }
+  .intro p { margin-top: var(--space-5); font-size: var(--size-0); }
+
+  .actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+  .button {
+    display: inline-block; padding: 0.75rem 1.25rem; border-radius: var(--radius-sm);
+    background: var(--oxblood-700); color: var(--paper); font-weight: 500; text-decoration: none;
+  }
+  .button:hover { background: var(--oxblood-800); }
+
+  .practices > div { padding-block: var(--space-5); border-top: 1px solid var(--ink-100); }
+  .practices dt { font-weight: 600; }
+  .practices dd { margin-top: var(--space-2); color: var(--ink-700); }
+
+  .about { display: grid; grid-template-columns: 120px 1fr; gap: var(--space-6); align-items: start; }
+  .about img { width: 120px; height: 160px; object-fit: cover; border-radius: var(--radius-sm); }
+  @media (max-width: 30rem) { .about { grid-template-columns: 1fr; } }
+
+  .steps { padding-left: 1.25rem; display: grid; gap: var(--space-4); color: var(--ink-700); margin-bottom: var(--space-5); }
+  .steps strong { color: var(--ink-900); font-weight: 600; }
+
+  .foot { margin-top: var(--space-9); padding-top: var(--space-5); border-top: 1px solid var(--ink-100); font-size: var(--size--1); color: var(--ink-500); }
+  .foot address { font-style: normal; margin-bottom: var(--space-3); }
+  .foot p { color: var(--ink-500); }
+</style>

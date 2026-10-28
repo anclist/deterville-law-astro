@@ -1,0 +1,41 @@
+---
+/**
+ * Template: MockLayout — bare shell for homepage direction mocks.
+ * No site chrome, so each mock owns its header and footer; tokens and reset still apply.
+ */
+import { toCss } from '@tokens/tokens';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  label: string;
+}
+const { title, label } = Astro.props;
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} | Deterville Law Office mocks</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style is:global set:html={toCss()}></style>
+  </head>
+  <body>
+    <slot />
+    <a class="mock-tag" href="/mocks">{label} · all mocks</a>
+  </body>
+</html>
+
+<style is:global>
+  .mock-tag {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 10;
+    padding: 0.4rem 0.75rem; border-radius: var(--radius-pill);
+    background: var(--ink-900); color: var(--paper);
+    font: 500 0.75rem/1 var(--font-sans); text-decoration: none;
+  }
+</style>
