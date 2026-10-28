@@ -1,110 +1,50 @@
 ---
 /**
- * Organism: HomeHero — names both practices plainly, routes visitors by need,
- * and puts the lawyer's face next to the promise. One primary action.
+ * Organism: HomeHero — a one-lawyer practice, so the page opens with the lawyer: her photograph,
+ * her name and her route to Canada. One primary action, one alternative, then quiet proof.
  */
 import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
-import Icon from '@atoms/Icon.astro';
-import RatingBadge from '@molecules/RatingBadge.astro';
-import { firm, practices } from '@data/site';
+import { firm } from '@data/site';
 ---
 <section class="hero" aria-labelledby="hero-title">
   <Container class="hero__grid">
-    <div class="copy">
-      <h1 id="hero-title">Make Canada home, and protect the family you build here.</h1>
-      <p class="lede">
-        Canadian immigration and Ontario wills and estates, handled personally by lawyer Nandi Deterville.
-        Meet online from anywhere in the world, or in person in Toronto.
+    <img class="photo" src="/images/nandi-deterville.jpg" alt="Nandi Deterville" width="899" height="1200" fetchpriority="high" />
+    <div class="text">
+      <h1 id="hero-title">Nandi Deterville</h1>
+      <p class="role">Canadian immigration and Ontario estate planning lawyer, Toronto</p>
+      <p>
+        Born and raised in Saint Lucia, called to the Bar in England, Saint Lucia and Ontario. Having lived in five
+        countries other than her homeland, she has navigated each one’s immigration rules, and that experience shapes
+        her work with people who want to make Canada their home.
       </p>
-
-      <div class="paths" role="group" aria-labelledby="paths-label">
-        <p id="paths-label" class="paths__label">What do you need help with?</p>
-        <ul>
-          {practices.map((p) => (
-            <li>
-              <a href={p.href} class="path">
-                <span class="path__title">{p.title}</span>
-                <span class="path__short">{p.short}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+      <p>She also helps Ontario families put Wills and Powers of Attorney in place, and provides notarial services.</p>
       <div class="actions">
         <Button href={firm.bookHref} size="lg">Book a consultation</Button>
-        <Button href={firm.whatsappHref} variant="ghost" icon="whatsapp" size="lg" target="_blank" rel="noopener">Message on WhatsApp</Button>
+        <a class="alt" href={firm.whatsappHref}>Message on WhatsApp</a>
       </div>
-
-      <div class="trust">
-        <RatingBadge />
-        <span class="trust__item"><Icon name="shield" size={20} />Licensed by the Law Society of Ontario</span>
-        <span class="trust__item"><Icon name="globe" size={20} />Clients worldwide</span>
-      </div>
+      <p class="trust">
+        Rated {firm.rating.score} on {firm.rating.source} from {firm.rating.count} reviews ·
+        Law Society of Ontario no. {firm.lsoNumber} · Consultations online, worldwide
+      </p>
     </div>
-
-    <figure class="portrait">
-      <img src="/images/nandi-deterville.jpg" alt="Nandi A. O. Deterville, lawyer" width="899" height="1200" fetchpriority="high" />
-      <figcaption>
-        <strong>Nandi A. O. Deterville</strong>
-        <span>Barrister &amp; Solicitor, Ontario. Called to the Bars of England &amp; Wales and Saint Lucia.</span>
-      </figcaption>
-    </figure>
   </Container>
 </section>
 
 <style>
-  .hero { padding-block: var(--space-8); background: linear-gradient(var(--color-surface-tint), var(--color-surface) 70%); }
-  .hero :global(.hero__grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); align-items: center; }
-  @media (min-width: 62rem) { .hero :global(.hero__grid) { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: var(--space-9); } }
+  .hero { padding-block: var(--space-8); }
+  .hero :global(.hero__grid) { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: center; }
+  .photo { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius-sm); }
+  h1 { font-size: var(--size-5); font-weight: 500; line-height: 1.05; }
+  .role { margin-top: var(--space-3); font-size: var(--size-1); color: var(--color-text-muted); }
+  .text > p:not(.role) { margin-top: var(--space-5); max-width: 52ch; }
+  .text > .trust { font-size: var(--size--1); color: var(--color-text-muted); }
+  .actions { display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-6); }
+  .alt { font-weight: 500; color: var(--color-action); text-underline-offset: 0.2em; }
 
-  h1 { font-size: var(--size-6); letter-spacing: -0.02em; line-height: 1.04; max-width: 17ch; }
-  .lede { margin-top: var(--space-5); font-size: var(--size-1); line-height: var(--leading-snug); color: var(--color-text-muted); max-width: 46ch; }
-
-  .paths { margin-top: var(--space-7); }
-  .paths__label { font-weight: 600; margin-bottom: var(--space-3); }
-  .paths ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
-  @media (min-width: 40rem) { .paths ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .path {
-    display: grid; gap: var(--space-1); height: 100%;
-    padding: var(--space-4);
-    border: 1.5px solid var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    text-decoration: none; color: var(--color-text);
-    transition: border-color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease);
-  }
-  .path:hover { border-color: var(--color-action); background: var(--color-surface-tint); }
-  .path__title { font-family: var(--font-heading); font-weight: 600; font-size: var(--size-1); color: var(--color-heading); }
-  .path__short { font-size: var(--size--1); color: var(--color-text-muted); }
-
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
-  .trust { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--color-border); }
-  .trust__item { display: inline-flex; gap: var(--space-2); align-items: center; font-size: var(--size--1); color: var(--color-text-muted); }
-  .trust__item :global(.icon) { color: var(--color-action); }
-
-  .portrait { position: relative; max-width: 26rem; justify-self: center; width: 100%; }
-  .portrait::before {
-    content: ''; position: absolute; inset: var(--space-6) calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) var(--space-6);
-    background: var(--oxblood-700); border-radius: var(--radius-md); z-index: -1;
-  }
-  .portrait img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius-md); }
-  figcaption {
-    position: absolute; left: calc(-1 * var(--space-5)); bottom: var(--space-6); max-width: 17rem;
-    display: grid; gap: var(--space-1);
-    padding: var(--space-4);
-    background: var(--color-surface); border-radius: var(--radius-sm); box-shadow: var(--shadow-raised);
-    font-size: var(--size--1); color: var(--color-text-muted);
-  }
-  figcaption strong { font-family: var(--font-heading); font-size: var(--size-0); color: var(--color-heading); }
-  @media (max-width: 62rem) {
-    .portrait { order: -1; max-width: 20rem; }
-    figcaption { left: var(--space-3); right: var(--space-3); max-width: none; bottom: var(--space-3); }
-  }
-  @media (max-width: 40rem) {
-    .portrait { max-width: 15rem; justify-self: start; }
-    .portrait::before { inset: var(--space-4) calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-4); }
-    figcaption { display: none; }
+  @media (max-width: 48rem) {
+    .hero { padding-top: var(--space-5); }
+    .hero :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-6); }
+    .photo { max-width: 20rem; }
   }
 </style>

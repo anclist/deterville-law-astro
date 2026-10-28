@@ -1,0 +1,33 @@
+---
+/** Organism: QuoteRow — three short review excerpts, each linking to the full review. */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import { testimonials } from '@data/site';
+
+const picks = ['Janice Suite', 'Jermael Syahungene', 'Karleen Greenidge'];
+const quotes = testimonials.filter((t) => picks.includes(t.name));
+---
+<section class="quotes" aria-labelledby="quotes-title">
+  <Container>
+    <SectionHeading id="quotes-title" title="What clients say" size="md" />
+    <div class="grid">
+      {quotes.map((q) => (
+        <figure>
+          <blockquote>{q.quote}</blockquote>
+          <figcaption><a href={q.href}>{q.name}, {q.source}</a></figcaption>
+        </figure>
+      ))}
+    </div>
+    <p><a class="all" href="/testimonials">Read all reviews</a></p>
+  </Container>
+</section>
+
+<style>
+  .quotes { padding-block: var(--space-9); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); margin-bottom: var(--space-6); }
+  blockquote { font: 500 var(--size-1)/1.4 var(--font-heading); color: var(--color-heading); }
+  figcaption { margin-top: var(--space-3); font-size: var(--size--1); }
+  figcaption a { color: var(--color-text-muted); text-underline-offset: 0.2em; }
+  .all { color: var(--color-action); text-underline-offset: 0.2em; }
+  @media (max-width: 62rem) { .grid { grid-template-columns: 1fr; gap: var(--space-6); } }
+</style>

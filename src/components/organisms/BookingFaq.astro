@@ -1,0 +1,33 @@
+---
+/** Organism: BookingFaq — the booking steps beside the questions people ask before booking. */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import FaqItem from '@molecules/FaqItem.astro';
+import { steps, faqs } from '@data/site';
+---
+<section class="booking" aria-label="Booking and common questions">
+  <Container class="booking__grid">
+    <div>
+      <SectionHeading id="steps-title" title="Booking takes three steps" size="md" />
+      <ol class="steps">
+        {steps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}
+      </ol>
+    </div>
+    <div>
+      <SectionHeading id="faq-title" title="Common questions" size="md" />
+      <div class="faq">
+        {faqs.slice(0, 4).map((f) => <FaqItem question={f.q}><p>{f.a}</p></FaqItem>)}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .booking { padding-block: var(--space-9); }
+  .booking :global(.booking__grid) { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+  .steps { padding-left: 1.25rem; display: grid; gap: var(--space-5); }
+  .steps strong { display: block; font-weight: 600; margin-bottom: var(--space-1); }
+  .steps span { color: var(--color-text-muted); }
+  .faq { border-top: 1px solid var(--color-border); }
+  @media (max-width: 48rem) { .booking :global(.booking__grid) { grid-template-columns: 1fr; gap: var(--space-7); } }
+</style>

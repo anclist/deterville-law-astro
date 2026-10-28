@@ -1,22 +1,23 @@
 ---
-/** Organism: CtaBand — closing ask. Every page ends here. */
+/** Organism: CtaBand — closing ask. Every page ends here. `quiet` sits on the tint for calmer pages. */
 import Container from '@atoms/Container.astro';
 import Button from '@atoms/Button.astro';
 import { firm } from '@data/site';
-interface Props { title?: string; body?: string }
+interface Props { title?: string; body?: string; tone?: 'bold' | 'quiet' }
 const {
   title = 'Talk to a lawyer about your next step.',
   body = 'Book a confidential consultation online, or call us. We meet clients wherever they are in the world.',
+  tone = 'bold',
 } = Astro.props;
 ---
-<section class="cta-band" aria-labelledby="cta-title">
+<section class:list={['cta-band', `cta-band--${tone}`]} aria-labelledby="cta-title">
   <Container class="cta-band__inner">
     <div>
       <h2 id="cta-title">{title}</h2>
       <p>{body}</p>
     </div>
     <div class="actions">
-      <Button href={firm.bookHref} variant="inverse" size="lg">Book a consultation</Button>
+      <Button href={firm.bookHref} variant={tone === 'bold' ? 'inverse' : 'primary'} size="lg">Book a consultation</Button>
       <a class="phone" href={firm.phoneHref}>or call {firm.phone}</a>
     </div>
   </Container>
@@ -30,4 +31,8 @@ const {
   p { margin-top: var(--space-3); color: var(--oxblood-100); max-width: 52ch; }
   .actions { display: grid; gap: var(--space-3); justify-items: start; }
   .phone { color: var(--color-text-inverse); font-weight: 600; }
+  .cta-band--quiet { background: var(--color-surface-tint); color: var(--color-text); padding-block: var(--space-8); }
+  .cta-band--quiet h2 { color: var(--color-heading); font-size: var(--size-3); font-weight: 500; max-width: 26ch; }
+  .cta-band--quiet p { color: var(--color-text-muted); }
+  .cta-band--quiet .phone { color: var(--color-action); }
 </style>
