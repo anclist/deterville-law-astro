@@ -1,0 +1,13 @@
+---
+/** Atom: Label — form label with optional required marker. */
+interface Props { for: string; required?: boolean; class?: string }
+const { for: htmlFor, required = false, class: className } = Astro.props;
+---
+<label class:list={['label', className]} for={htmlFor}>
+  <slot />{required && <span class="req" aria-hidden="true"> *</span>}
+</label>
+
+<style>
+  .label { display: block; font-weight: 600; font-size: var(--size--1); color: var(--color-text); }
+  .req { color: var(--color-action); }
+</style>

@@ -1,0 +1,22 @@
+---
+/** Organism: PageHero — inner page header: title, lede, optional actions slot. */
+import Container from '@atoms/Container.astro';
+interface Props { title: string; lede?: string; tone?: 'tint' | 'plain' }
+const { title, lede, tone = 'tint' } = Astro.props;
+---
+<section class:list={['page-hero', `page-hero--${tone}`]}>
+  <Container>
+    <slot name="before" />
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    {Astro.slots.has('default') && <div class="extra"><slot /></div>}
+  </Container>
+</section>
+
+<style>
+  .page-hero { padding-block: var(--space-8) var(--space-8); }
+  .page-hero--tint { background: var(--color-surface-tint); border-bottom: 1px solid var(--oxblood-100); }
+  h1 { font-size: var(--size-5); letter-spacing: -0.015em; max-width: 22ch; }
+  .lede { margin-top: var(--space-4); font-size: var(--size-1); line-height: var(--leading-snug); color: var(--color-text-muted); max-width: 54ch; }
+  .extra { margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+</style>

@@ -1,0 +1,17 @@
+---
+/** Organism: PracticeList — all practice areas as rows. */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import PracticeRow from '@molecules/PracticeRow.astro';
+import { practices } from '@data/site';
+---
+<section class="practice-list" aria-labelledby="practice-title">
+  <Container>
+    <SectionHeading id="practice-title" title="How we can help" lede="Three areas of practice, all handled personally by Ms Deterville." />
+    <div>{practices.map((p) => <PracticeRow practice={p} />)}</div>
+  </Container>
+</section>
+
+<style>
+  .practice-list { padding-block: var(--layout-section-y); }
+</style>

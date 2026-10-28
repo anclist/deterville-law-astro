@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import PageHero from '@organisms/PageHero.astro';
+import MediaRow from '@molecules/MediaRow.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { appearances, articles, directories } from '@data/media';
+
+const sections = [
+  { id: 'appearances', title: 'Talks and panels', items: appearances },
+  { id: 'articles', title: 'Articles and features', items: articles },
+  { id: 'directories', title: 'Directory listings', items: directories },
+];
+---
+<BaseLayout title="Media & Other Appearances" description="Talks, panels, articles and directory listings for Nandi Deterville of Deterville Law Office.">
+  <PageHero title="Media and appearances" lede="Seminars, panels and articles, including a long run of Make a Will Month sessions with the Ontario Bar Association and Toronto Public Library." />
+  <section class="media">
+    <Container class="media-grid">
+      <nav class="toc" aria-label="On this page">
+        <ul>{sections.map((s) => <li><a href={`#${s.id}`}>{s.title} <span>{s.items.length}</span></a></li>)}</ul>
+      </nav>
+      <div class="lists">
+        {sections.map((s) => (
+          <section aria-labelledby={s.id}>
+            <h2 id={s.id}>{s.title}</h2>
+            <ul>{s.items.map((item) => <MediaRow item={item} />)}</ul>
+          </section>
+        ))}
+      </div>
+    </Container>
+  </section>
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .media { padding-block: var(--space-8) var(--layout-section-y); }
+  .media :global(.media-grid) { display: grid; gap: var(--space-7); }
+  @media (min-width: 60rem) { .media :global(.media-grid) { grid-template-columns: 14rem minmax(0, 1fr); gap: var(--space-9); align-items: start; } .toc { position: sticky; top: 7rem; } }
+  .toc ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .toc a { display: flex; justify-content: space-between; color: var(--color-text); text-decoration: none; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); }
+  .toc a:hover { color: var(--color-action); }
+  .toc span { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+  .lists { display: grid; gap: var(--space-8); }
+  h2 { font-size: var(--size-3); margin-bottom: var(--space-4); }
+  .lists ul { list-style: none; padding: 0; }
+</style>

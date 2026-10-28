@@ -1,0 +1,28 @@
+---
+/**
+ * Atom: Logo — the firm's Lady Justice mark.
+ * `full` = mark + wordmark image (light grounds); `wordmark` = typeset, works on dark grounds.
+ */
+interface Props {
+  variant?: 'full' | 'wordmark';
+  tone?: 'default' | 'inverse';
+  height?: number;
+}
+const { variant = 'full', tone = 'default', height = 56 } = Astro.props;
+---
+{variant === 'full' ? (
+  <img class="logo-img" src="/images/logo.png" alt="Deterville Law Office" height={height} width={Math.round(height * 1.325)} style={`height:${height}px`} />
+) : (
+  <span class:list={['wordmark', `wordmark--${tone}`]}>
+    <span class="wordmark__name">Deterville</span>
+    <span class="wordmark__sub">Law Office</span>
+  </span>
+)}
+
+<style>
+  .logo-img { width: auto; max-width: none; }
+  .wordmark { display: inline-flex; flex-direction: column; line-height: 1; color: var(--color-action); }
+  .wordmark--inverse { color: var(--color-text-inverse); }
+  .wordmark__name { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 600; letter-spacing: 0.02em; }
+  .wordmark__sub { font-size: var(--size--2); letter-spacing: 0.42em; margin-top: 0.35em; opacity: 0.85; }
+</style>

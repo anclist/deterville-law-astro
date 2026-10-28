@@ -1,0 +1,23 @@
+---
+/** Atom: Tag — short categorical label (blog category, practice area). Sentence case by design. */
+interface Props { tone?: 'default' | 'immigration' | 'estates'; href?: string }
+const { tone = 'default', href } = Astro.props;
+const El = href ? 'a' : 'span';
+---
+<El class:list={['tag', `tag--${tone}`]} href={href}><slot /></El>
+
+<style>
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: 0.2em 0.7em;
+    border-radius: var(--radius-sm);
+    font-size: var(--size--1);
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--color-surface-sunken);
+    color: var(--oxblood-800);
+  }
+  .tag--immigration { background: #E3F1F8; color: #164D66; }
+  .tag--estates { background: var(--color-surface-sunken); color: var(--oxblood-800); }
+  a.tag:hover { text-decoration: underline; }
+</style>

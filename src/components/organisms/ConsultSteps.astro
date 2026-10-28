@@ -1,0 +1,28 @@
+---
+/** Organism: ConsultSteps — how booking works. Removes uncertainty right before the ask. */
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import Step from '@molecules/Step.astro';
+import { steps, firm } from '@data/site';
+---
+<section class="consult-steps" aria-labelledby="steps-title">
+  <Container>
+    <SectionHeading id="steps-title" title="Booking a consultation" lede="What happens between now and your first meeting." />
+    <ol class="steps">
+      {steps.map((s, i) => <Step n={i + 1} title={s.title}>{s.body}</Step>)}
+    </ol>
+    <div class="cta">
+      <Button href={firm.bookHref} size="lg">Start step one</Button>
+      <p>Prefer to ask a question first? <a href="/contact-us">Send us a message</a>.</p>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .consult-steps { padding-block: var(--layout-section-y); background: var(--color-surface-tint); }
+  .steps { list-style: none; padding: 0; display: grid; gap: var(--space-7); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 52rem) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .cta { margin-top: var(--space-8); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); }
+  .cta p { color: var(--color-text-muted); }
+</style>

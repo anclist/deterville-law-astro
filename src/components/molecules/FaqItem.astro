@@ -1,0 +1,24 @@
+---
+/** Molecule: FaqItem — native <details>, so it works without JS and is keyboard-accessible. */
+import Icon from '@atoms/Icon.astro';
+interface Props { question: string; open?: boolean }
+const { question, open } = Astro.props;
+---
+<details class="faq" open={open}>
+  <summary><span>{question}</span><Icon name="chevron" size={20} /></summary>
+  <div class="answer"><slot /></div>
+</details>
+
+<style>
+  .faq { border-bottom: 1px solid var(--color-border); }
+  summary {
+    display: flex; justify-content: space-between; gap: var(--space-4); align-items: center;
+    padding-block: var(--space-5);
+    font-family: var(--font-heading); font-size: var(--size-1); font-weight: 600; color: var(--color-heading);
+    cursor: pointer; list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary :global(.icon) { color: var(--color-action); transition: transform var(--motion-base) var(--motion-ease); }
+  .faq[open] summary :global(.icon) { transform: rotate(180deg); }
+  .answer { padding-bottom: var(--space-5); color: var(--color-text-muted); max-width: var(--measure-prose); }
+</style>

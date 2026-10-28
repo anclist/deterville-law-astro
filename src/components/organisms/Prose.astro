@@ -1,0 +1,19 @@
+---
+/** Organism: Prose — long-form typography for markdown (blog posts, legal). */
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<div class:list={['prose', className]}><slot /></div>
+
+<style>
+  .prose { max-width: var(--measure-prose); font-size: 1.125rem; line-height: 1.7; }
+  .prose :global(> * + *) { margin-top: var(--space-5); }
+  .prose :global(h2) { font-size: var(--size-3); margin-top: var(--space-8); }
+  .prose :global(h3) { font-size: var(--size-1); margin-top: var(--space-7); }
+  .prose :global(h2 + *), .prose :global(h3 + *) { margin-top: var(--space-3); }
+  .prose :global(ol), .prose :global(ul) { padding-left: 1.4em; display: grid; gap: var(--space-2); }
+  .prose :global(li::marker) { color: var(--color-action); font-weight: 600; }
+  .prose :global(strong) { color: var(--color-heading); }
+  .prose :global(blockquote) { border-left: 3px solid var(--color-action); padding-left: var(--space-5); font-family: var(--font-heading); font-size: var(--size-1); color: var(--color-heading); }
+  .prose :global(img) { border-radius: var(--radius-md); }
+</style>

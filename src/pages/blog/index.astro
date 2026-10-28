@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import PageHero from '@organisms/PageHero.astro';
+import PostGrid from '@organisms/PostGrid.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = ['All posts', 'Immigration', 'Wills & Estates'];
+---
+<BaseLayout title="Blog" description="Free legal information on Canadian immigration and Ontario estate planning from a Toronto lawyer.">
+  <PageHero title="Legal updates, in plain language" lede="Notes on changes to Canadian immigration rules and Ontario estate planning. General information, not legal advice." />
+  <section class="blog">
+    <Container>
+      <div class="filters" role="group" aria-label="Filter by topic" data-filters>
+        {categories.map((c, i) => (
+          <button type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-filter={i === 0 ? '' : c}>{c}</button>
+        ))}
+      </div>
+      <div data-posts>
+        <PostGrid posts={posts} headingLevel="h2" />
+      </div>
+    </Container>
+  </section>
+  <CtaBand />
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const items = document.querySelectorAll<HTMLLIElement>('[data-posts] li');
+  buttons.forEach((btn) => btn.addEventListener('click', () => {
+    const f = btn.dataset.filter;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    items.forEach((li) => {
+      const cat = li.querySelector('.tag')?.textContent?.trim();
+      li.hidden = !!f && cat !== f;
+    });
+  }));
+</script>
+
+<style>
+  .blog { padding-block: var(--space-7) var(--layout-section-y); }
+  .filters { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-7); }
+  .filters button {
+    padding: 0.5em 1.1em; border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-border-strong); background: var(--color-surface);
+    font-weight: 600; font-size: var(--size--1); color: var(--color-text);
+  }
+  .filters button:hover { border-color: var(--color-action); }
+  .filters button[aria-pressed='true'] { background: var(--color-action); border-color: var(--color-action); color: var(--color-action-text); }
+</style>

@@ -1,0 +1,91 @@
+---
+/** Template: BaseLayout — document shell, tokens, SEO, structured data, site chrome. */
+import { toCss } from '@tokens/tokens';
+import { firm, socials } from '@data/site';
+import SiteHeader from '@organisms/SiteHeader.astro';
+import SiteFooter from '@organisms/SiteFooter.astro';
+import MobileActionBar from '@organisms/MobileActionBar.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  chrome?: boolean;
+}
+const {
+  title,
+  description = 'Canadian immigration and Ontario wills & estates lawyer in Toronto. Online consultations worldwide. Book with Deterville Law Office.',
+  image = '/images/nandi-deterville.jpg',
+  noindex = false,
+  chrome = true,
+} = Astro.props;
+
+const fullTitle = title === firm.name ? `${firm.name} | Immigration & Estate Planning Lawyer, Toronto` : `${title} | ${firm.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const abs = (path: string) => new URL(import.meta.env.BASE_URL.replace(/\/$/, '') + path, Astro.site).toString();
+const ogImage = abs(image);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: firm.name,
+  url: abs('/'),
+  telephone: '+1-647-503-8684',
+  email: firm.email,
+  image: abs('/images/nandi-deterville.jpg'),
+  logo: abs('/images/logo.png'),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${firm.address.line1}, ${firm.address.line2}`,
+    addressLocality: 'Toronto',
+    addressRegion: 'ON',
+    postalCode: 'M3C 1W3',
+    addressCountry: 'CA',
+  },
+  areaServed: ['Ontario', 'Canada', 'Worldwide'],
+  knowsAbout: ['Canadian immigration law', 'Wills and estates', 'Powers of attorney', 'Notarial services'],
+  founder: { '@type': 'Person', name: 'Nandi Ayodele Olivia Deterville', jobTitle: 'Barrister and Solicitor' },
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: firm.rating.score, reviewCount: firm.rating.count },
+  sameAs: socials.map((s) => s.href),
+};
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {/* Proposal site: keep every page out of search engines (and away from the live site's rankings). */}
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#780B0B" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={firm.name} />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@DetervilleLaw" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <style is:global set:html={toCss()}></style>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {chrome && <SiteHeader />}
+    <main id="main"><slot /></main>
+    {chrome && <SiteFooter />}
+    {chrome && <MobileActionBar />}
+  </body>
+</html>

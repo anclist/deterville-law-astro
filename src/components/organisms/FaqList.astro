@@ -1,0 +1,19 @@
+---
+/** Organism: FaqList — answers the objections that stop people booking. */
+import Container from '@atoms/Container.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import FaqItem from '@molecules/FaqItem.astro';
+import { faqs } from '@data/site';
+---
+<section class="faq-list" aria-labelledby="faq-title">
+  <Container class="faq-grid">
+    <SectionHeading id="faq-title" title="Before you book" lede="Answers to what people usually ask us first." />
+    <div>{faqs.map((f, i) => <FaqItem question={f.q} open={i === 0}>{f.a}</FaqItem>)}</div>
+  </Container>
+</section>
+
+<style>
+  .faq-list { padding-block: var(--layout-section-y); }
+  .faq-list :global(.faq-grid) { display: grid; gap: var(--space-5); }
+  @media (min-width: 60rem) { .faq-list :global(.faq-grid) { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-9); align-items: start; } }
+</style>

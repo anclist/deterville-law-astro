@@ -1,0 +1,435 @@
+---
+/**
+ * Styleguide — living documentation of the design system.
+ * Tokens are read from the same objects that generate the CSS, and every specimen below is
+ * the real component, so this page can't drift from what ships.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import Icon from '@atoms/Icon.astro';
+import Logo from '@atoms/Logo.astro';
+import Tag from '@atoms/Tag.astro';
+import Stars from '@atoms/Stars.astro';
+import Input from '@atoms/Input.astro';
+import Label from '@atoms/Label.astro';
+import Checkbox from '@atoms/Checkbox.astro';
+import FormField from '@molecules/FormField.astro';
+import SectionHeading from '@molecules/SectionHeading.astro';
+import PracticeRow from '@molecules/PracticeRow.astro';
+import TestimonialCard from '@molecules/TestimonialCard.astro';
+import PostCard from '@molecules/PostCard.astro';
+import ContactMethod from '@molecules/ContactMethod.astro';
+import Step from '@molecules/Step.astro';
+import RatingBadge from '@molecules/RatingBadge.astro';
+import FaqItem from '@molecules/FaqItem.astro';
+import MediaRow from '@molecules/MediaRow.astro';
+import Journey from '@organisms/Journey.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { primitive, semantic } from '@tokens/tokens';
+import { icons, type IconName } from '@lib/icons';
+import { contrast, grade } from '@lib/contrast';
+import { practices, testimonials, firm } from '@data/site';
+import { appearances } from '@data/media';
+
+const P = primitive.color;
+const families = [
+  { name: 'Oxblood', note: 'Brand. 700 is the original #780B0B; 900 grounds dark sections.', keys: ['oxblood-50', 'oxblood-100', 'oxblood-200', 'oxblood-400', 'oxblood-600', 'oxblood-700', 'oxblood-800', 'oxblood-900'] },
+  { name: 'Gold', note: 'From the Saint Lucia flag. Only on dark grounds: accents, focus rings, the journey line.', keys: ['gold-300', 'gold-500'] },
+  { name: 'Ink', note: 'Text and borders, warmed toward red so they sit with oxblood.', keys: ['ink-900', 'ink-700', 'ink-500', 'ink-300', 'ink-100', 'paper'] },
+  { name: 'Feedback', note: 'Success states and rating stars.', keys: ['green-700', 'green-50', 'amber-700'] },
+] as const;
+
+const pairs: { fg: keyof typeof P; bg: keyof typeof P; use: string }[] = [
+  { fg: 'ink-900', bg: 'paper', use: 'Body text' },
+  { fg: 'ink-500', bg: 'paper', use: 'Muted text' },
+  { fg: 'oxblood-700', bg: 'paper', use: 'Links, primary action' },
+  { fg: 'oxblood-900', bg: 'oxblood-50', use: 'Headings on tint' },
+  { fg: 'paper', bg: 'oxblood-700', use: 'Primary button label' },
+  { fg: 'oxblood-200', bg: 'oxblood-900', use: 'Muted text on dark' },
+  { fg: 'gold-500', bg: 'oxblood-900', use: 'Accent on dark' },
+  { fg: 'oxblood-900', bg: 'gold-500', use: 'Inverse button label' },
+];
+
+const typeScale = [
+  { step: '6', role: 'Display: home hero, journey', sample: 'Make Canada home' },
+  { step: '5', role: 'Page title (h1), section title (h2)', sample: 'Booking a consultation' },
+  { step: '4', role: 'Closing call to action', sample: 'Talk to a lawyer' },
+  { step: '3', role: 'Practice titles, sub-sections', sample: 'Wills & Estates' },
+  { step: '2', role: 'Card titles, quotes', sample: 'Verify your identity' },
+  { step: '1', role: 'Lede paragraphs, FAQ questions', sample: 'Meet online from anywhere in the world.' },
+  { step: '0', role: 'Body', sample: 'We draft Wills and Powers of Attorney for Ontario families.' },
+  { step: '-1', role: 'Meta, labels, captions', sample: 'Called to the Bar, January 2017' },
+  { step: '-2', role: 'Fine print', sample: 'Licensee of the Law Society of Ontario (71552S)' },
+];
+
+const nav = [
+  ['principles', 'Principles'],
+  ['color', 'Colour'],
+  ['type', 'Typography'],
+  ['space', 'Space, radius, elevation'],
+  ['atoms', 'Atoms'],
+  ['molecules', 'Molecules'],
+  ['organisms', 'Organisms'],
+];
+const samplePost = { title: 'Huge news for Canadians abroad', description: 'Bill C-3 proposes to end the first-generation limit on citizenship by descent.', date: new Date('2025-06-05'), category: 'Immigration', image: '/images/post-canadians-abroad.jpg' };
+---
+<BaseLayout title="Styleguide" description="The Deterville Law Office design system: tokens, atoms, molecules and organisms." noindex>
+  <header class="sg-hero">
+    <Container>
+      <h1>Design system</h1>
+      <p>
+        Tokens, components and the rules behind them. Every specimen on this page is the production component,
+        rendered from the same token file that styles the site.
+      </p>
+      <p class="files">
+        Tokens: <code>src/tokens/tokens.ts</code><br />
+        Components: <code>src/components/{'{atoms,molecules,organisms}'}</code>
+      </p>
+    </Container>
+  </header>
+
+  <Container class="sg">
+    <nav class="sg-nav" aria-label="Styleguide sections">
+      <ul>{nav.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul>
+    </nav>
+
+    <div class="sg-body">
+      <!-- Principles -->
+      <section id="principles" class="sg-section">
+        <h2>Principles</h2>
+        <ol class="principles">
+          <li><strong>One ask per screen.</strong> Booking a consultation is the primary action everywhere. Phone and WhatsApp are always second.</li>
+          <li><strong>Lead with the person.</strong> This is a solo practice. Ms Deterville’s face, voice and own migration story carry the trust, not stock landscapes.</li>
+          <li><strong>Plain words, real facts.</strong> Every claim is sourced from the firm. No invented statistics, no all-caps labels, no legal jargon where a plain verb will do.</li>
+          <li><strong>Oxblood for action, gold for emphasis on dark.</strong> Red means “you can act here”. Gold never appears on white.</li>
+          <li><strong>Built for someone abroad on a phone.</strong> Thumb-reach contact bar, time-zone-free language, forms that work without JavaScript.</li>
+        </ol>
+      </section>
+
+      <!-- Colour -->
+      <section id="color" class="sg-section">
+        <h2>Colour</h2>
+        <p class="sg-lede">Primitives hold raw values. Components never use them directly; they use semantic tokens such as <code>--color-action</code>.</p>
+        {families.map((f) => (
+          <div class="family">
+            <h3>{f.name}</h3>
+            <p class="note">{f.note}</p>
+            <ul class="swatches">
+              {f.keys.map((k) => (
+                <li class="swatch">
+                  <span class="chip" style={`background:${P[k]}`} />
+                  <code>--{k}</code>
+                  <span class="hex">{P[k]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        <h3>Semantic tokens</h3>
+        <div class="table-wrap">
+          <table class="tokens">
+            <thead><tr><th scope="col">Token</th><th scope="col">Resolves to</th><th scope="col">Sample</th></tr></thead>
+            <tbody>
+              {Object.entries(semantic.color).map(([k, v]) => (
+                <tr>
+                  <td><code>--color-{k}</code></td>
+                  <td><code>{v.replace(/var\(--(.+)\)/, '$1')}</code></td>
+                  <td><span class="chip chip--sm" style={`background:var(--color-${k})`} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Contrast pairs</h3>
+        <p class="note">WCAG 2 ratios, calculated at build time from the token values.</p>
+        <ul class="pairs">
+          {pairs.map((p) => {
+            const r = contrast(P[p.fg], P[p.bg]);
+            return (
+              <li class="pair" style={`background:${P[p.bg]};color:${P[p.fg]}`}>
+                <span class="pair__sample">Aa</span>
+                <span class="pair__use">{p.use}</span>
+                <span class="pair__ratio">{r}:1, {grade(r)}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <!-- Type -->
+      <section id="type" class="sg-section">
+        <h2>Typography</h2>
+        <p class="sg-lede">
+          Playfair Display carries over from the existing brand for headings. Public Sans replaces Open Sans for body text: it was drawn
+          for government forms and reads as plain and trustworthy at small sizes. Scale: major third (1.25) from a 17px base;
+          the top two steps are fluid.
+        </p>
+        <div class="faces">
+          <div class="face">
+            <span class="face__sample" style="font-family:var(--font-heading)">Aa</span>
+            <div><strong>Playfair Display</strong><p class="note">Headings, quotes, numerals in steps. 500–700.</p></div>
+          </div>
+          <div class="face">
+            <span class="face__sample" style="font-family:var(--font-body)">Aa</span>
+            <div><strong>Public Sans</strong><p class="note">Body, UI, forms. 400–600.</p></div>
+          </div>
+        </div>
+        <ul class="scale">
+          {typeScale.map((t) => {
+            const display = Number(t.step) >= 1;
+            return (
+              <li>
+                <div class="scale__meta"><code>--size-{t.step}</code><span>{primitive.size[t.step as keyof typeof primitive.size]}</span><span>{t.role}</span></div>
+                <p style={`font-size:var(--size-${t.step});font-family:var(--font-${display ? 'heading' : 'body'});color:var(--color-${display ? 'heading' : 'text'});line-height:1.15;font-weight:${display ? 600 : 400}`}>{t.sample}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <!-- Space -->
+      <section id="space" class="sg-section">
+        <h2>Space, radius, elevation</h2>
+        <p class="sg-lede">A 4px base grid. Sections breathe with <code>--layout-section-y</code>; gutters scale with the viewport.</p>
+        <ul class="spaces">
+          {Object.entries(primitive.space).map(([k, v]) => (
+            <li><code>--space-{k}</code><span class="bar" style={`width:${v}`} /><span class="note">{v}</span></li>
+          ))}
+        </ul>
+        <div class="radii">
+          {Object.entries(primitive.radius).map(([k, v]) => (
+            <div class="radius"><span style={`border-radius:${v}`} /><code>--radius-{k}</code><span class="note">{k === 'pill' ? 'Buttons, filters (brand)' : k === 'md' ? 'Cards, images' : 'Inputs, tags'}</span></div>
+          ))}
+          <div class="radius"><span style="border-radius:var(--radius-md);box-shadow:var(--shadow-raised);background:var(--color-surface)" /><code>--shadow-raised</code><span class="note">Floating UI only</span></div>
+        </div>
+      </section>
+
+      <!-- Atoms -->
+      <section id="atoms" class="sg-section">
+        <h2>Atoms</h2>
+        <p class="sg-lede">The smallest pieces. They take props, not context, and know nothing about the page they sit on.</p>
+
+        <div class="specimen">
+          <h3>Button</h3>
+          <p class="note">Primary is the single action we want on a screen. Secondary is an alternative, ghost is low emphasis, inverse is primary on dark.</p>
+          <div class="row">
+            <Button>Book a consultation</Button>
+            <Button variant="secondary">Read more reviews</Button>
+            <Button variant="ghost" icon="whatsapp">Message on WhatsApp</Button>
+          </div>
+          <div class="row">
+            <Button size="sm">Small</Button>
+            <Button>Medium</Button>
+            <Button size="lg">Large</Button>
+            <Button icon="phone" variant="secondary">{firm.phone}</Button>
+          </div>
+          <div class="row dark">
+            <Button variant="inverse">Book a consultation</Button>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>Form controls</h3>
+          <div class="grid-2">
+            <div class="stack"><Label for="sg-a" required>Text input</Label><Input id="sg-a" placeholder="Jane Doe" /></div>
+            <div class="stack"><Label for="sg-b">Select</Label><Input id="sg-b" as="select" options={['Canadian Immigration', 'Wills & Estates']} /></div>
+            <div class="stack"><Label for="sg-c">Invalid</Label><Input id="sg-c" invalid /></div>
+            <div class="stack"><Label for="sg-d">Textarea</Label><Input id="sg-d" as="textarea" rows={3} /></div>
+          </div>
+          <Checkbox id="sg-e">Send me occasional updates.</Checkbox>
+        </div>
+
+        <div class="grid-2">
+          <div class="specimen">
+            <h3>Tag</h3>
+            <div class="row"><Tag tone="immigration">Immigration</Tag><Tag tone="estates">Wills & Estates</Tag><Tag>Default</Tag></div>
+          </div>
+          <div class="specimen">
+            <h3>Stars</h3>
+            <div class="row"><Stars value={4.9} size={20} /><Stars value={3} /></div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>Logo</h3>
+          <div class="row">
+            <Logo height={72} />
+            <div class="dark" style="padding:var(--space-5);border-radius:var(--radius-md)"><Logo variant="wordmark" tone="inverse" /></div>
+            <Logo variant="wordmark" />
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>Icon</h3>
+          <p class="note">24px grid, inherits <code>currentColor</code>, hidden from screen readers unless given a label.</p>
+          <ul class="icons">
+            {(Object.keys(icons) as IconName[]).map((n) => <li><Icon name={n} size={24} /><code>{n}</code></li>)}
+          </ul>
+        </div>
+      </section>
+
+      <!-- Molecules -->
+      <section id="molecules" class="sg-section">
+        <h2>Molecules</h2>
+        <p class="sg-lede">Atoms combined to do one job: a labelled field, a review, a step in a process.</p>
+
+        <div class="specimen">
+          <h3>FormField</h3>
+          <div class="grid-2">
+            <FormField id="sg-f1" label="Phone or WhatsApp" type="tel" hint="Include your country code." />
+            <FormField id="sg-f2" label="Email" type="email" required error="Enter an email address like name@example.com." />
+          </div>
+        </div>
+
+        <div class="specimen">
+          <h3>SectionHeading</h3>
+          <SectionHeading title="How we can help" lede="Three areas of practice, all handled personally by Ms Deterville." />
+        </div>
+
+        <div class="specimen">
+          <h3>PracticeRow</h3>
+          <PracticeRow practice={practices[1]} />
+        </div>
+
+        <div class="grid-2">
+          <div class="specimen"><h3>TestimonialCard</h3><TestimonialCard testimonial={testimonials[0]} /></div>
+          <div class="specimen"><h3>PostCard</h3><PostCard href="#" {...samplePost} /></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="specimen">
+            <h3>ContactMethod</h3>
+            <div class="stack">
+              <ContactMethod icon="phone" label="Phone" href={firm.phoneHref}>{firm.phone}</ContactMethod>
+              <ContactMethod icon="mail" label="Email" href={`mailto:${firm.email}`}>{firm.email}</ContactMethod>
+            </div>
+          </div>
+          <div class="specimen"><h3>RatingBadge</h3><RatingBadge /></div>
+        </div>
+
+        <div class="specimen">
+          <h3>Step</h3>
+          <p class="note">Numbered only because booking really is a sequence.</p>
+          <ol class="steps-demo"><Step n={1} title="Verify your identity">Two pieces of government ID.</Step><Step n={2} title="Book and pay">Card or e-transfer.</Step></ol>
+        </div>
+
+        <div class="specimen">
+          <h3>FaqItem</h3>
+          <FaqItem question="I live outside Canada. Can we still meet?" open>Yes. Most consultations happen online.</FaqItem>
+          <FaqItem question="Is the consultation free?">No. Consultations are paid.</FaqItem>
+        </div>
+
+        <div class="specimen">
+          <h3>MediaRow</h3>
+          <ul class="plain">{appearances.slice(0, 2).map((a) => <MediaRow item={a} />)}</ul>
+        </div>
+      </section>
+
+      <!-- Organisms -->
+      <section id="organisms" class="sg-section">
+        <h2>Organisms</h2>
+        <p class="sg-lede">
+          Complete sections assembled into pages. The journey band is the one bold moment in the system. Everything else stays quiet so it lands.
+        </p>
+        <ul class="organism-list">
+          <li><code>SiteHeader</code> Sticky nav with phone and booking. Collapses to a menu below 64rem.</li>
+          <li><code>MobileActionBar</code> Call, WhatsApp and Book, fixed within thumb reach below 48rem.</li>
+          <li><code>HomeHero</code> Promise, a router by need, one primary action, proof.</li>
+          <li><code>PageHero</code> Inner-page title, lede and actions.</li>
+          <li><code>PracticeList</code> All practice areas as rows.</li>
+          <li><code>Journey</code> The lawyer’s route to Canada. The gold line draws as it scrolls into view.</li>
+          <li><code>ConsultSteps</code> How booking works, placed right before the ask.</li>
+          <li><code>TestimonialGrid</code>, <code>FaqList</code>, <code>PostGrid</code>, <code>ContactForm</code>, <code>Prose</code></li>
+          <li><code>CtaBand</code> The closing ask that ends every page.</li>
+          <li><code>SiteFooter</code> Contact, navigation, socials, regulatory notice.</li>
+        </ul>
+      </section>
+    </div>
+  </Container>
+
+  <div class="organism-demo"><Journey showLink={false} /></div>
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .sg-hero { background: var(--color-surface-tint); border-bottom: 1px solid var(--oxblood-100); padding-block: var(--space-8); }
+  .sg-hero h1 { font-size: var(--size-5); }
+  .sg-hero p { margin-top: var(--space-4); max-width: 60ch; color: var(--color-text-muted); font-size: var(--size-1); line-height: var(--leading-snug); }
+  .sg-hero .files { font-size: var(--size--1); line-height: 1.8; }
+  code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em; background: var(--color-surface-tint); padding: 0.1em 0.35em; border-radius: var(--radius-sm); color: var(--oxblood-800); }
+
+  :global(.sg) { display: grid; gap: var(--space-7); padding-block: var(--space-8) var(--layout-section-y); }
+  @media (min-width: 64rem) { :global(.sg) { grid-template-columns: 13rem minmax(0, 1fr); gap: var(--space-9); } }
+  .sg-nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  @media (min-width: 64rem) {
+    .sg-nav { position: sticky; top: 7rem; align-self: start; }
+    .sg-nav ul { flex-direction: column; border-left: 2px solid var(--color-border); gap: 0; }
+    .sg-nav a { padding: var(--space-2) var(--space-4); }
+  }
+  .sg-nav a { display: block; color: var(--color-text-muted); text-decoration: none; font-weight: 500; }
+  .sg-nav a:hover { color: var(--color-action); }
+
+  .sg-body { display: grid; gap: var(--space-9); min-width: 0; }
+  .sg-section > h2 { font-size: var(--size-4); padding-bottom: var(--space-3); border-bottom: 2px solid var(--oxblood-700); margin-bottom: var(--space-5); }
+  .sg-section h3 { font-size: var(--size-1); margin-bottom: var(--space-2); }
+  .sg-section > h3 { margin-top: var(--space-7); }
+  .sg-lede { color: var(--color-text-muted); max-width: 64ch; margin-bottom: var(--space-6); }
+  .note { font-size: var(--size--1); color: var(--color-text-muted); }
+
+  .principles { padding-left: 1.3em; display: grid; gap: var(--space-4); max-width: 68ch; }
+  .principles li::marker { color: var(--color-action); font-family: var(--font-heading); font-weight: 700; }
+
+  .family { margin-bottom: var(--space-6); }
+  .swatches { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); }
+  .swatch { display: grid; gap: 2px; font-size: var(--size--1); }
+  .swatch code { background: none; padding: 0; color: var(--color-text); }
+  .chip { display: block; height: 4.5rem; border-radius: var(--radius-md); border: 1px solid rgb(0 0 0 / 0.06); margin-bottom: var(--space-2); }
+  .chip--sm { width: 2.25rem; height: 1.5rem; margin: 0; border-radius: var(--radius-sm); }
+  .hex { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+
+  .table-wrap { overflow-x: auto; margin-top: var(--space-3); }
+  .tokens { width: 100%; border-collapse: collapse; font-size: var(--size--1); }
+  .tokens th { text-align: left; font-weight: 600; padding: var(--space-2) var(--space-3); border-bottom: 2px solid var(--color-border); }
+  .tokens td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+
+  .pairs { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); }
+  .pair { display: grid; gap: var(--space-1); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid rgb(0 0 0 / 0.06); }
+  .pair__sample { font-family: var(--font-heading); font-size: var(--size-3); line-height: 1; }
+  .pair__use { font-weight: 600; }
+  .pair__ratio { font-size: var(--size--1); opacity: 0.9; font-variant-numeric: tabular-nums; }
+
+  .faces { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-bottom: var(--space-6); }
+  .face { display: flex; gap: var(--space-5); align-items: center; padding: var(--space-5); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+  .face__sample { font-size: 3.5rem; line-height: 1; color: var(--color-heading); }
+  .scale { list-style: none; padding: 0; }
+  .scale li { display: grid; gap: var(--space-2); padding-block: var(--space-4); border-top: 1px solid var(--color-border); }
+  .scale__meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: var(--size--1); color: var(--color-text-muted); }
+  .scale p { overflow-wrap: anywhere; }
+
+  .spaces { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .spaces li { display: grid; grid-template-columns: 7rem auto 1fr; align-items: center; gap: var(--space-4); }
+  .bar { display: block; height: 0.75rem; background: var(--oxblood-400); border-radius: 2px; }
+  .radii { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-7); }
+  .radius { display: grid; gap: var(--space-1); justify-items: start; font-size: var(--size--1); }
+  .radius > span:first-child { width: 6rem; height: 4rem; background: var(--color-surface-sunken); border: 1.5px solid var(--oxblood-200); margin-bottom: var(--space-2); }
+
+  .specimen { padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: var(--space-5); display: grid; gap: var(--space-4); min-width: 0; }
+  .specimen > h3 { margin: 0; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .dark { background: var(--color-surface-inverse); padding: var(--space-5); border-radius: var(--radius-md); }
+  .grid-2 { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .grid-2 > .specimen { margin-bottom: 0; }
+  .grid-2 + .specimen, .specimen + .grid-2 { margin-top: var(--space-5); }
+  .stack { display: grid; gap: var(--space-2); }
+  .icons { list-style: none; padding: 0; display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); }
+  .icons li { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-4) var(--space-2); border-radius: var(--radius-sm); background: var(--color-surface-tint); color: var(--color-action); }
+  .icons code { background: none; color: var(--color-text-muted); }
+  .steps-demo { list-style: none; padding: 0; display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .plain { list-style: none; padding: 0; }
+  .organism-list { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
+  .organism-list li { padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); }
+  .organism-list code { margin-right: var(--space-2); }
+</style>

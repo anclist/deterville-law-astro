@@ -1,0 +1,34 @@
+---
+/** Molecule: FormField — Label + Input + hint/error, wired for screen readers. */
+import Label from '@atoms/Label.astro';
+import Input from '@atoms/Input.astro';
+
+interface Props {
+  id: string;
+  label: string;
+  as?: 'input' | 'textarea' | 'select';
+  type?: astroHTML.JSX.HTMLInputTypeAttribute;
+  options?: string[];
+  hint?: string;
+  error?: string;
+  required?: boolean;
+  placeholder?: string;
+  autocomplete?: string;
+}
+const { id, label, hint, error, required, ...rest } = Astro.props;
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = error ? `${id}-error` : undefined;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
+---
+<div class="form-field">
+  <Label for={id} required={required}>{label}</Label>
+  {hint && <p class="hint" id={hintId}>{hint}</p>}
+  <Input id={id} required={required} invalid={!!error} describedBy={describedBy} {...rest} />
+  {error && <p class="error" id={errorId}>{error}</p>}
+</div>
+
+<style>
+  .form-field { display: grid; gap: var(--space-2); }
+  .hint { font-size: var(--size--1); color: var(--color-text-muted); margin-top: -0.25rem; }
+  .error { font-size: var(--size--1); color: var(--oxblood-600); font-weight: 600; }
+</style>

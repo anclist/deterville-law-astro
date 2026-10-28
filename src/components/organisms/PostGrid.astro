@@ -1,0 +1,20 @@
+---
+/** Organism: PostGrid — list of blog posts. */
+import PostCard from '@molecules/PostCard.astro';
+import type { CollectionEntry } from 'astro:content';
+interface Props { posts: CollectionEntry<'blog'>[]; headingLevel?: 'h2' | 'h3' }
+const { posts, headingLevel = 'h3' } = Astro.props;
+---
+<ul class="post-grid">
+  {posts.map((p) => (
+    <li>
+      <PostCard href={`/blog/${p.id}`} headingLevel={headingLevel} {...p.data} />
+    </li>
+  ))}
+</ul>
+
+<style>
+  .post-grid { list-style: none; padding: 0; display: grid; gap: var(--space-7) var(--space-6); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 44rem) { .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 68rem) { .post-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>

@@ -1,0 +1,37 @@
+---
+/** Molecule: TestimonialCard — a quote with attribution and its source. */
+import Icon from '@atoms/Icon.astro';
+import type { Testimonial } from '@data/site';
+interface Props { testimonial: Testimonial }
+const { quote, name, date, source, href } = Astro.props.testimonial;
+const year = new Date(date).getFullYear();
+---
+<figure class="testimonial">
+  <blockquote><p>{quote}</p></blockquote>
+  <figcaption>
+    <span class="name">{name}</span>
+    <a class="source" href={href} rel="noopener" target="_blank">{source} review, {year}<Icon name="external" size={14} /></a>
+  </figcaption>
+</figure>
+
+<style>
+  .testimonial {
+    display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-5);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    height: 100%;
+  }
+  blockquote p {
+    font-family: var(--font-heading);
+    font-size: var(--size-2);
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
+  }
+  blockquote p::before { content: '“'; }
+  blockquote p::after { content: '”'; }
+  figcaption { display: grid; gap: var(--space-1); font-size: var(--size--1); }
+  .name { font-weight: 600; }
+  .source { color: var(--color-text-muted); display: inline-flex; gap: var(--space-1); align-items: center; }
+</style>

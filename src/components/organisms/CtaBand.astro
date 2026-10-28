@@ -1,0 +1,33 @@
+---
+/** Organism: CtaBand — closing ask. Every page ends here. */
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import { firm } from '@data/site';
+interface Props { title?: string; body?: string }
+const {
+  title = 'Talk to a lawyer about your next step.',
+  body = 'Book a confidential consultation online, or call us. We meet clients wherever they are in the world.',
+} = Astro.props;
+---
+<section class="cta-band" aria-labelledby="cta-title">
+  <Container class="cta-band__inner">
+    <div>
+      <h2 id="cta-title">{title}</h2>
+      <p>{body}</p>
+    </div>
+    <div class="actions">
+      <Button href={firm.bookHref} variant="inverse" size="lg">Book a consultation</Button>
+      <a class="phone" href={firm.phoneHref}>or call {firm.phone}</a>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .cta-band { background: var(--oxblood-700); color: var(--color-text-inverse); padding-block: var(--space-9); }
+  .cta-band :global(.cta-band__inner) { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 60rem) { .cta-band :global(.cta-band__inner) { grid-template-columns: minmax(0, 1.4fr) auto; gap: var(--space-9); } }
+  h2 { color: var(--color-text-inverse); font-size: var(--size-4); max-width: 20ch; }
+  p { margin-top: var(--space-3); color: var(--oxblood-100); max-width: 52ch; }
+  .actions { display: grid; gap: var(--space-3); justify-items: start; }
+  .phone { color: var(--color-text-inverse); font-weight: 600; }
+</style>

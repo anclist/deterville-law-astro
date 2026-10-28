@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import Button from '@atoms/Button.astro';
+import Journey from '@organisms/Journey.astro';
+import CtaBand from '@organisms/CtaBand.astro';
+import { firm, memberships } from '@data/site';
+---
+<BaseLayout title="Who We Are" description="Nandi A. O. Deterville, Toronto lawyer focused on Canadian immigration and Ontario estate planning. Called to the Bars of Ontario, England & Wales, and Saint Lucia.">
+  <section class="bio-hero">
+    <Container class="bio-grid">
+      <div class="copy">
+        <h1>Nandi A. O. Deterville</h1>
+        <p class="role">Barrister &amp; Solicitor, founder of Deterville Law Office</p>
+        <div class="prose">
+          <p>
+            Nandi Deterville was born and raised on the Caribbean island of Saint Lucia. She holds a Bachelor of Arts in
+            International Relations from Florida International University in Miami, and attended law school at the College of
+            Law of England &amp; Wales and BPP Law School in England. She was called to the Bars of England &amp; Wales and
+            Saint Lucia in July and August 2008, and practised at a small general practice firm in Saint Lucia before
+            migrating to Toronto. She requalified as a Barrister and Solicitor and was called to the Ontario Bar in January 2017.
+          </p>
+          <p>
+            Ms Deterville runs Deterville Law Office in Toronto, focusing on Canadian immigration law and Ontario estate planning.
+            Having lived in five countries other than her homeland, she has navigated the immigration policies of each, and that
+            lived experience drives her work with people who want to make Canada their home, temporarily or permanently.
+          </p>
+          <p>
+            She was introduced to estate planning early in her practice in Saint Lucia and enjoys helping clients put plans in place
+            that reduce the cost and uncertainty their loved ones face without the right Powers of Attorney, or without a properly
+            drafted Will. With Deterville Law Office, clients get her years of experience and a compassionate focus on the best outcome.
+          </p>
+        </div>
+        <div class="actions">
+          <Button href={firm.bookHref} size="lg">Book a consultation with Ms Deterville</Button>
+        </div>
+      </div>
+      <figure class="photo">
+        <img src="/images/nandi-deterville.jpg" alt="Portrait of Nandi A. O. Deterville" width="899" height="1200" />
+      </figure>
+    </Container>
+  </section>
+
+  <Journey showLink={false} />
+
+  <section class="community" aria-labelledby="community-title">
+    <Container class="community-grid">
+      <div>
+        <h2 id="community-title">Giving back</h2>
+        <p>
+          Ms Deterville volunteers as a section executive of the Ontario Bar Association, helping plan and produce Continuing
+          Professional Development programs, and shares legal information on social media on topics that matter to her clients.
+        </p>
+        <p><a href="/media">See her talks, panels and articles</a></p>
+      </div>
+      <ul>
+        {memberships.map((m) => <li>{m}</li>)}
+      </ul>
+    </Container>
+  </section>
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .bio-hero { padding-block: var(--space-8) var(--layout-section-y); background: linear-gradient(var(--color-surface-tint), var(--color-surface) 60%); }
+  .bio-hero :global(.bio-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 60rem) { .bio-hero :global(.bio-grid) { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr); gap: var(--space-9); align-items: start; } }
+  h1 { font-size: var(--size-5); letter-spacing: -0.015em; }
+  .role { margin-top: var(--space-2); font-size: var(--size-1); color: var(--color-action); }
+  .prose { margin-top: var(--space-6); display: grid; gap: var(--space-5); max-width: var(--measure-prose); }
+  .actions { margin-top: var(--space-7); }
+  .photo { position: sticky; top: 7rem; }
+  .photo img { border-radius: var(--radius-md); aspect-ratio: 3 / 4; object-fit: cover; box-shadow: 1.25rem 1.25rem 0 var(--oxblood-700); }
+  @media (max-width: 60rem) { .photo { order: -1; position: static; max-width: 18rem; } }
+  .community { padding-block: var(--layout-section-y); }
+  .community :global(.community-grid) { display: grid; gap: var(--space-7); }
+  @media (min-width: 60rem) { .community :global(.community-grid) { grid-template-columns: 1fr 1fr; gap: var(--space-9); } }
+  .community h2 { font-size: var(--size-4); margin-bottom: var(--space-5); }
+  .community p + p { margin-top: var(--space-4); }
+  .community ul { list-style: none; padding: 0; }
+  .community li { padding-block: var(--space-4); border-top: 1px solid var(--color-border); }
+  .community li:last-child { border-bottom: 1px solid var(--color-border); }
+</style>

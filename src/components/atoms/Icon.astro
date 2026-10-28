@@ -1,0 +1,31 @@
+---
+/**
+ * Atom: Icon — inline SVG, 24×24 grid, inherits currentColor.
+ * Decorative by default; pass `label` to make it announce.
+ */
+import { icons, type IconName } from '@lib/icons';
+
+interface Props {
+  name: IconName;
+  size?: number;
+  label?: string;
+  class?: string;
+}
+
+const { name, size = 20, label, class: className } = Astro.props;
+---
+<svg
+  class:list={['icon', className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  aria-hidden={label ? undefined : 'true'}
+  aria-label={label}
+  role={label ? 'img' : undefined}
+  focusable="false"
+  set:html={icons[name]}
+/>
+
+<style>
+  .icon { flex: none; display: inline-block; vertical-align: middle; }
+</style>

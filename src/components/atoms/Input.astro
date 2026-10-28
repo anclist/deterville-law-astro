@@ -1,0 +1,54 @@
+---
+/**
+ * Atom: Input — text-like control. `as` switches between input, textarea and select
+ * so all three share one visual contract.
+ */
+interface Props {
+  id: string;
+  name?: string;
+  as?: 'input' | 'textarea' | 'select';
+  type?: astroHTML.JSX.HTMLInputTypeAttribute;
+  options?: string[];
+  placeholder?: string;
+  required?: boolean;
+  invalid?: boolean;
+  describedBy?: string;
+  autocomplete?: string;
+  rows?: number;
+}
+const { id, name = id, as = 'input', type = 'text', options = [], placeholder, required, invalid, describedBy, autocomplete, rows = 5 } = Astro.props;
+const common = {
+  id, name, required,
+  class: 'field',
+  'aria-invalid': invalid ? ('true' as const) : undefined,
+  'aria-describedby': describedBy,
+};
+---
+{as === 'textarea' && <textarea {...common} rows={rows} placeholder={placeholder} />}
+{as === 'select' && (
+  <select {...common}>
+    <option value="" disabled selected>Choose one</option>
+    {options.map((o) => <option value={o}>{o}</option>)}
+  </select>
+)}
+{as === 'input' && <input {...common} type={type} placeholder={placeholder} autocomplete={autocomplete} />}
+
+<style>
+  .field {
+    width: 100%;
+    padding: 0.75em 0.9em;
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--size-0);
+    line-height: 1.4;
+    transition: border-color var(--motion-fast) var(--motion-ease);
+  }
+  .field::placeholder { color: var(--ink-300); }
+  .field:hover { border-color: var(--ink-500); }
+  .field:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-action); }
+  .field[aria-invalid='true'] { border-color: var(--oxblood-600); background: var(--oxblood-50); }
+  textarea.field { resize: vertical; min-height: 8rem; }
+  select.field { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6' fill='none' stroke='%236B6262' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8em center; background-size: 1.1em; padding-right: 2.5em; }
+</style>

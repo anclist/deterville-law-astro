@@ -1,0 +1,23 @@
+---
+/** Molecule: Step — one stage in a real sequence. Number is meaningful here. */
+interface Props { n: number; title: string }
+const { n, title } = Astro.props;
+---
+<li class="step">
+  <span class="n" aria-hidden="true">{n}</span>
+  <h3>{title}</h3>
+  <p><slot /></p>
+</li>
+
+<style>
+  .step { display: grid; gap: var(--space-3); align-content: start; }
+  .n {
+    display: grid; place-items: center;
+    width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    border: 1.5px solid var(--color-action);
+    color: var(--color-action);
+    font-family: var(--font-heading); font-size: var(--size-1); font-weight: 600;
+  }
+  h3 { font-size: var(--size-2); }
+  p { color: var(--color-text-muted); max-width: 34ch; }
+</style>

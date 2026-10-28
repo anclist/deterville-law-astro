@@ -1,0 +1,75 @@
+---
+/**
+ * Organism: ContactForm — general enquiries (not the booking/ID form).
+ * Posts to PUBLIC_FORM_ENDPOINT when configured (Formspree, Netlify Forms, a worker, etc.).
+ * Without one it falls back to opening the visitor's email app with the message pre-filled,
+ * so the form is never a dead end.
+ */
+import FormField from '@molecules/FormField.astro';
+import Checkbox from '@atoms/Checkbox.astro';
+import Button from '@atoms/Button.astro';
+import Icon from '@atoms/Icon.astro';
+import { firm } from '@data/site';
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+<form class="contact-form" method="post" action={endpoint || `mailto:${firm.email}`} data-contact-form data-endpoint={endpoint} data-email={firm.email} novalidate>
+  <div class="row">
+    <FormField id="name" label="Full name" required autocomplete="name" />
+    <FormField id="email" label="Email" type="email" required autocomplete="email" />
+  </div>
+  <div class="row">
+    <FormField id="phone" label="Phone or WhatsApp" type="tel" autocomplete="tel" hint="Optional. Include your country code." />
+    <FormField id="service" label="What do you need help with?" as="select" options={['Canadian Immigration', 'Wills & Estates', 'Notarial Services', 'Something else']} required />
+  </div>
+  <FormField id="message" label="How can we help?" as="textarea" required hint="A short summary is enough. Please don’t include confidential details yet." />
+  <Checkbox id="updates">Send me occasional Canadian immigration and estate planning updates.</Checkbox>
+
+  <div class="submit">
+    <Button type="submit" size="lg">Send message</Button>
+    <p class="note">Prefer to talk? Call <a href={firm.phoneHref}>{firm.phone}</a>.</p>
+  </div>
+
+  <div class="status" role="status" aria-live="polite" hidden data-status>
+    <Icon name="check" size={20} />
+    <p>Message sent. We’ll reply to <strong data-status-email></strong> soon.</p>
+  </div>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let firstInvalid: HTMLElement | null = null;
+    form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('.field').forEach((el) => {
+      const ok = el.checkValidity();
+      el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok && !firstInvalid) firstInvalid = el;
+    });
+    if (firstInvalid) { (firstInvalid as HTMLElement).focus(); return; }
+
+    const data = new FormData(form);
+    const endpoint = form.dataset.endpoint;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+
+    if (endpoint) {
+      const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) { status.hidden = false; status.dataset.tone = 'error'; status.querySelector('p')!.textContent = `Message not sent. Email us at ${form.dataset.email} instead.`; return; }
+    } else {
+      const body = `Name: ${data.get('name')}\nEmail: ${data.get('email')}\nPhone: ${data.get('phone') || '-'}\nService: ${data.get('service')}\nUpdates: ${data.get('updates') ? 'yes' : 'no'}\n\n${data.get('message')}`;
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(`Enquiry: ${data.get('service')}`)}&body=${encodeURIComponent(body)}`;
+    }
+    status.querySelector('[data-status-email]')!.textContent = String(data.get('email'));
+    status.hidden = false;
+    form.reset();
+  });
+</script>
+
+<style>
+  .contact-form { display: grid; gap: var(--space-5); }
+  .row { display: grid; gap: var(--space-5); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 40rem) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .submit { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .note { font-size: var(--size--1); color: var(--color-text-muted); }
+  .status { display: flex; gap: var(--space-3); align-items: flex-start; padding: var(--space-4); border-radius: var(--radius-sm); background: var(--color-success-surface); color: var(--color-success); }
+  .status[data-tone='error'] { background: var(--oxblood-50); color: var(--oxblood-600); }
+</style>

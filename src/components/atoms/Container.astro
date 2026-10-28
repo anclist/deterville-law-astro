@@ -1,0 +1,12 @@
+---
+/** Atom: Container — horizontal rhythm. The only place max-width + gutter live. */
+interface Props { width?: 'default' | 'narrow' | 'prose'; class?: string; as?: string }
+const { width = 'default', class: className, as: El = 'div' } = Astro.props;
+---
+<El class:list={['container', `container--${width}`, className]}><slot /></El>
+
+<style>
+  .container { width: 100%; max-width: var(--layout-container); margin-inline: auto; padding-inline: var(--layout-gutter); }
+  .container--narrow { max-width: 56rem; }
+  .container--prose { max-width: calc(var(--measure-prose) + 2 * var(--layout-gutter)); }
+</style>

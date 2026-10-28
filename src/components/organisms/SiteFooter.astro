@@ -1,0 +1,68 @@
+---
+/** Organism: SiteFooter — contact details, secondary nav, socials, regulatory notice. */
+import Logo from '@atoms/Logo.astro';
+import Icon from '@atoms/Icon.astro';
+import Container from '@atoms/Container.astro';
+import ContactMethod from '@molecules/ContactMethod.astro';
+import RatingBadge from '@molecules/RatingBadge.astro';
+import { firm, nav, footerNav, socials } from '@data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <Container>
+    <div class="grid">
+      <div class="col brand">
+        <Logo variant="wordmark" tone="inverse" />
+        <p>{firm.tagline}. Online consultations worldwide, and in person in Toronto.</p>
+        <RatingBadge tone="inverse" />
+      </div>
+      <div class="col">
+        <h2>Contact</h2>
+        <div class="stack">
+          <ContactMethod icon="phone" label="Phone" href={firm.phoneHref} tone="inverse">{firm.phone}</ContactMethod>
+          <ContactMethod icon="mail" label="Email" href={`mailto:${firm.email}`} tone="inverse">{firm.email}</ContactMethod>
+          <ContactMethod icon="whatsapp" label="WhatsApp" href={firm.whatsappHref} tone="inverse">Message us</ContactMethod>
+          <ContactMethod icon="pin" label="Office" href={firm.mapHref} tone="inverse">{firm.address.line1}<br />{firm.address.city}</ContactMethod>
+        </div>
+      </div>
+      <div class="col">
+        <h2>Explore</h2>
+        <ul class="links">
+          {[...nav, ...footerNav].map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <ul class="socials">
+        {socials.map((s) => (
+          <li><a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><Icon name={s.icon} size={20} /></a></li>
+        ))}
+      </ul>
+      <p class="legal">
+        Deterville Law Office is a registered business name of Nandi Ayodele Olivia Deterville, licensee of the Law Society of Ontario ({firm.lsoNumber}).
+        Information on this site is general and is not legal advice. Contacting us does not create a lawyer–client relationship.
+      </p>
+      <p class="legal">© {year} Deterville Law Office. All rights reserved.</p>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .site-footer { background: var(--color-surface-inverse); color: var(--color-text-inverse-muted); padding-block: var(--space-9) var(--space-7); }
+  .grid { display: grid; gap: var(--space-7); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 52rem) { .grid { grid-template-columns: 1.3fr 1.2fr 1fr; } }
+  .brand { display: grid; gap: var(--space-5); align-content: start; }
+  .brand p { max-width: 34ch; }
+  h2 { font-family: var(--font-body); font-size: var(--size--1); font-weight: 600; color: var(--color-accent-on-dark); margin-bottom: var(--space-5); }
+  .stack { display: grid; gap: var(--space-5); }
+  .links { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .links a { color: var(--color-text-inverse); text-decoration: none; }
+  .links a:hover { text-decoration: underline; }
+  .bottom { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid rgb(255 255 255 / 0.12); display: grid; gap: var(--space-4); }
+  .socials { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .socials a { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: var(--color-text-inverse); border: 1px solid rgb(255 255 255 / 0.2); }
+  .socials a:hover { background: var(--color-accent-on-dark); color: var(--oxblood-900); border-color: var(--color-accent-on-dark); }
+  .legal { font-size: var(--size--2); max-width: 90ch; }
+  @media (max-width: 48rem) { .site-footer { padding-bottom: calc(var(--space-7) + 4.5rem); } }
+</style>

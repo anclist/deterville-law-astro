@@ -1,0 +1,14 @@
+---
+/** Atom: Checkbox — native input, brand accent, label in the slot. */
+interface Props { id: string; name?: string; required?: boolean; checked?: boolean }
+const { id, name = id, required, checked } = Astro.props;
+---
+<label class="check" for={id}>
+  <input type="checkbox" id={id} name={name} required={required} checked={checked} />
+  <span><slot /></span>
+</label>
+
+<style>
+  .check { display: flex; gap: var(--space-3); align-items: flex-start; font-size: var(--size--1); color: var(--color-text-muted); cursor: pointer; }
+  .check input { width: 1.15rem; height: 1.15rem; margin-top: 0.2em; accent-color: var(--color-action); flex: none; }
+</style>

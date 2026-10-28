@@ -1,0 +1,53 @@
+---
+/** Booking entry point. Embeds the firm's existing encrypted Jotform (ID verification + agreement). */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@atoms/Container.astro';
+import Icon from '@atoms/Icon.astro';
+import PageHero from '@organisms/PageHero.astro';
+import { firm, steps } from '@data/site';
+const formUrl = 'https://form.jotform.com/222770543698062';
+---
+<BaseLayout title="Book a Consultation" description="Verify your identity and book a consultation with Deterville Law Office." noindex>
+  <PageHero title="Book a consultation" lede="Start by confirming your identity. Law Society of Ontario rules require us to verify every client before giving advice." />
+
+  <section class="booking">
+    <Container class="booking-grid">
+      <aside class="aside">
+        <h2>What you’ll need</h2>
+        <ul class="needs">
+          <li><Icon name="check" size={18} />Two pieces of government-issued ID: passport, driver’s licence or national ID card</li>
+          <li><Icon name="check" size={18} />Your home address and occupation</li>
+          <li><Icon name="check" size={18} />A short description of your legal matter</li>
+          <li><Icon name="check" size={18} />A credit card, or electronic funds transfer if you live in Canada</li>
+        </ul>
+        <h2>What happens next</h2>
+        <ol class="next">
+          {steps.map((s) => <li><strong>{s.title}.</strong> {s.body}</li>)}
+        </ol>
+        <p class="secure"><Icon name="shield" size={18} />The booking form is encrypted.</p>
+        <p class="help">Trouble with the form? Call <a href={firm.phoneHref}>{firm.phone}</a> or <a href={`mailto:${firm.email}`}>email us</a>.</p>
+      </aside>
+      <div class="frame">
+        <iframe src={formUrl} title="Client verification of identity and consultation booking form" loading="lazy" allow="geolocation; microphone; camera" />
+        <p class="fallback">Form not loading? <a href={formUrl} target="_blank" rel="noopener">Open it in a new tab</a>.</p>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .booking { padding-block: var(--space-8) var(--layout-section-y); }
+  .booking :global(.booking-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 62rem) { .booking :global(.booking-grid) { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-8); align-items: start; } .aside { position: sticky; top: 7rem; } }
+  h2 { font-size: var(--size-2); margin-bottom: var(--space-4); }
+  h2:not(:first-child) { margin-top: var(--space-7); }
+  .needs { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
+  .needs li { display: flex; gap: var(--space-2); }
+  .needs :global(.icon) { color: var(--color-action); margin-top: 0.25em; }
+  .next { padding-left: 1.2em; display: grid; gap: var(--space-3); color: var(--color-text-muted); }
+  .next strong { color: var(--color-text); }
+  .secure { margin-top: var(--space-6); display: flex; gap: var(--space-2); align-items: center; color: var(--color-success); font-weight: 600; font-size: var(--size--1); }
+  .help { margin-top: var(--space-3); font-size: var(--size--1); color: var(--color-text-muted); }
+  .frame iframe { width: 100%; height: 1600px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+  .fallback { margin-top: var(--space-3); font-size: var(--size--1); color: var(--color-text-muted); }
+</style>
