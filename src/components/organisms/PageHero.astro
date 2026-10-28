@@ -17,4 +17,5 @@ const { title, lede } = Astro.props;
   h1 { font-size: var(--size-4); line-height: 1.05; max-width: 22ch; }
   .lede { margin-top: var(--space-4); font-size: var(--size-1); line-height: var(--leading-snug); color: var(--color-text-muted); max-width: 54ch; }
   .extra { margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; }
+  @media (max-width: 30rem) { .extra :global(.btn) { width: 100%; } }
 </style>

@@ -49,7 +49,7 @@ const { practice } = Astro.props as { practice: Practice };
 </BaseLayout>
 
 <style>
-  .detail { padding-block: var(--space-9); }
+  .detail { padding-block: var(--layout-section); }
   .detail :global(.detail__grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 60rem) { .detail :global(.detail__grid) { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; } }
   h2 { font-size: var(--size-3); margin-bottom: var(--space-5); }

@@ -30,4 +30,6 @@ const {
   p { margin-top: var(--space-2); color: var(--color-text-muted); max-width: 52ch; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; }
   a:not(:global(.btn)) { text-underline-offset: 0.2em; }
+  /* Phones: the primary action spans the width, easy to reach with a thumb */
+  @media (max-width: 30rem) { .actions :global(.btn) { width: 100%; } }
 </style>

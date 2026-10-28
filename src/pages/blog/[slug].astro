@@ -63,7 +63,7 @@ const fmt = date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', d
 </BaseLayout>
 
 <style>
-  .post { padding-block: var(--space-7) var(--space-9); }
+  .post { padding-block: var(--space-7) var(--layout-section); }
   .post :global(.post-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 62rem) { .post :global(.post-grid) { grid-template-columns: minmax(0, 1fr) 20rem; gap: var(--space-9); align-items: start; } }
   .head { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); max-width: var(--measure-prose); }

@@ -62,7 +62,7 @@ import { firm, memberships } from '@data/site';
 </BaseLayout>
 
 <style>
-  .bio-hero { padding-block: var(--space-8) var(--space-9); }
+  .bio-hero { padding-block: var(--space-8) var(--layout-section); }
   .bio-hero :global(.bio-grid) { display: grid; gap: var(--space-8); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 60rem) { .bio-hero :global(.bio-grid) { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr); gap: var(--space-9); align-items: start; } }
   h1 { font-size: var(--size-4); line-height: 1.05; }
@@ -72,7 +72,7 @@ import { firm, memberships } from '@data/site';
   .photo { position: sticky; top: 7rem; }
   .photo img { border-radius: var(--radius-sm); aspect-ratio: 3 / 4; object-fit: cover; }
   @media (max-width: 60rem) { .photo { order: -1; position: static; max-width: 18rem; } }
-  .community { padding-block: var(--space-9); }
+  .community { padding-block: var(--layout-section); }
   .community :global(.community-grid) { display: grid; gap: var(--space-7); }
   @media (min-width: 60rem) { .community :global(.community-grid) { grid-template-columns: 1fr 1fr; gap: var(--space-9); } }
   .community h2 { font-size: var(--size-3); margin-bottom: var(--space-5); }

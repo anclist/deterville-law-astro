@@ -45,6 +45,14 @@ import { firm } from '@data/site';
   @media (max-width: 48rem) {
     .hero { padding-top: var(--space-5); }
     .hero :global(.hero__grid) { grid-template-columns: 1fr; gap: var(--space-6); }
-    .photo { max-width: 20rem; }
+    /* Wide crop on phones so the name and booking button reach the first screen */
+    .photo { aspect-ratio: 4 / 3; object-position: center 18%; }
+    /* Phones: the booking action follows the name, before the bio */
+    .text { display: flex; flex-direction: column; }
+    .actions { order: 1; margin-top: var(--space-5); }
+    .text > p:not(.role, .trust) { order: 2; }
+    .text > .trust { order: 3; }
   }
+  /* Phones: the primary action spans the width, easy to reach with a thumb */
+  @media (max-width: 30rem) { .actions :global(.btn) { width: 100%; } }
 </style>

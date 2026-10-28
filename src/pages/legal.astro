@@ -19,7 +19,7 @@ const toc = getHeadings().filter((h) => h.depth === 2);
 </BaseLayout>
 
 <style>
-  .legal { padding-block: var(--space-7) var(--space-9); }
+  .legal { padding-block: var(--space-7) var(--layout-section); }
   .legal :global(.legal-grid) { display: grid; gap: var(--space-7); }
   @media (min-width: 60rem) { .legal :global(.legal-grid) { grid-template-columns: 15rem minmax(0, 1fr); gap: var(--space-9); align-items: start; } .toc { position: sticky; top: 7rem; } }
   .toc ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); border-left: 2px solid var(--color-border); }

@@ -101,6 +101,8 @@ export const semantic = {
   layout: {
     'container': '76rem',
     'gutter': 'clamp(1rem, 4vw, 2.5rem)',
+    // Vertical rhythm between sections: 3.5rem on phones up to 6rem on wide screens
+    'section': 'clamp(3.5rem, 2.25rem + 5vw, 6rem)',
   },
   shadow: {
     raised: '0 1px 2px rgb(61 3 3 / 0.06), 0 8px 24px -12px rgb(61 3 3 / 0.18)',
